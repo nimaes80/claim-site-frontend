@@ -1,3 +1,15 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow:
+Disallow: /cgi-bin/
+Disallow: /static/
+Disallow: /admin/
+Disallow: /manifest.json
+Disallow: /logo.png
+Disallow: /human.txt
+Disallow: /security.txt
+Disallow: /sw.js
+Disallow: /favicon.ico
+Disallow: 
+Sitemap: https://api.example.ir/sitemap.xml
+Host: example.ir
