@@ -6,6 +6,7 @@ import ButtomBar from './components/home/ButtomBar';
 function Home() {
 
 	window.screenTop = 0;
+	
 
 	return (
 			<>

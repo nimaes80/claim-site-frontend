@@ -15,7 +15,17 @@ const Theme = createTheme({
 			light: deepPurple[800],
 			main: deepPurple[900],
 			dark: deepPurple["A700"],
-		}
+		},
+		white: {
+			light: '#fff',
+			main: '#fff',
+			dark: '#fff',
+		},
+		black: {
+			light: '#000',
+			main: '#000',
+			dark: '#000',
+		},
 
 	},
 	

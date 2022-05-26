@@ -9,12 +9,12 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
 import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
-import { AppBar, Avatar, Box, Button, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
+import { AppBar, Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, TextField, Toolbar, Tooltip, Typography } from '@mui/material';
 import SvgIcon from "@mui/material/SvgIcon";
 import { Container } from '@mui/system';
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 
 export default class MainHeader extends Component {
 
@@ -27,6 +27,8 @@ export default class MainHeader extends Component {
 			isDrawerOpen: false,
 			isMenuOpen: false,
 			isSocialsMenuOpen:false,
+			isDialogOpen: false,
+
 			pages: [
 				{
 					name: "خانه",
@@ -69,13 +71,17 @@ export default class MainHeader extends Component {
 			settings: [
 				{
 					name: 'ورود',
-					url: '/login',
 					icon: <LoginRoundedIcon />,
 				},
 				{
-					name: 'ثبت نام',
-					url: '/register',
+					name: 'خروج',
+					url: '/logout/',
 					icon: <LogoutRoundedIcon />,
+				},
+				{
+					name: 'بالانس',
+					url: '/dashboard/balance/',
+					icon: <AccountCircleRoundedIcon />,
 				},
 			],
 		};
@@ -83,6 +89,8 @@ export default class MainHeader extends Component {
 		this.handleDrawer = this.handleDrawer.bind(this);
 		this.handleMenu = this.handleMenu.bind(this);
 		this.handleSocialsMenu = this.handleSocialsMenu.bind(this);
+		this.handleDialog = this.handleDialog.bind(this);
+		this.handleLogin = this.handleLogin.bind(this);
 		
 	};
 
@@ -108,6 +116,20 @@ export default class MainHeader extends Component {
 		this.setState({
 			isSocialsMenuOpen: !this.state.isSocialsMenuOpen,
 		});
+	}
+
+
+
+	handleDialog() {
+		this.setState({
+			isDialogOpen: !this.state.isDialogOpen,
+		});
+	};
+
+
+
+	handleLogin() {
+
 	}
 
 
@@ -182,10 +204,9 @@ export default class MainHeader extends Component {
 								</IconButton>
 							</Tooltip>
 							<Menu
-								anchorEl={this.state.isSocialsMenuOpen}
 								sx={{mt:'45px', mr:7, display: {xs:'none', md:'flex'}}}
 								id="socials-menu-appbar"
-								anchorOrigin={{ vertical:'top', horizontal:'end'}}
+									anchorOrigin={{ vertical:'top', horizontal:'end'}}
 								
 								transformOrigin={{vertical: 'top', horizontal: 'end'}}
 								open={this.state.isSocialsMenuOpen}
@@ -194,7 +215,7 @@ export default class MainHeader extends Component {
 								{
 
 									this.state.socials.map((social, i) => (
-										<MenuItem component="a" target="_blank" href={social.url} key={i} onClick={this.handleSocialsMenu} sx={{py:0}}>
+										<MenuItem component="a" className="main-nav-link" target="_blank" href={social.url} key={i} onClick={this.handleSocialsMenu} sx={{py:0}}>
 											<Button>
 												<SvgIcon sx={{color:social.color, px:1}}>{ social.icon }</SvgIcon>
 												<Typography sx={{color:"#000"}}>{social.name}</Typography>
@@ -220,7 +241,6 @@ export default class MainHeader extends Component {
 							sx={{mt:'45px', }}
 							id="menu-appbar"
 							anchorOrigin={{ vertical:'top', horizontal:'left'}}
-							
 							transformOrigin={{vertical: 'top', horizontal: 'left'}}
 							open={this.state.isMenuOpen}
 							onClose={this.handleMenu}
@@ -228,11 +248,21 @@ export default class MainHeader extends Component {
 							{
 
 								this.state.settings.map((setting, i) => (
-									<MenuItem component={Link} to={setting.url} key={i} onClick={this.handleMenu} sx={{py:0}}>
-										<Button startIcon={setting.icon}>
-											{setting.name}
-										</Button>
-									</MenuItem>
+									setting.url ? (
+										<MenuItem component={Link} to={setting.url} key={i} onClick={this.handleMenu} sx={{py:0}}>
+											<Button startIcon={setting.icon} >
+												{setting.name}
+											</Button>
+										</MenuItem>
+									)
+									:
+									(
+										<MenuItem key={i} onClick={this.handleMenu} sx={{py:0}}>
+											<Button startIcon={setting.icon} onClick={this.handleDialog}>
+												{setting.name}
+											</Button>
+										</MenuItem>
+									)
 								))
 							}
 
@@ -270,6 +300,22 @@ export default class MainHeader extends Component {
 					</List>
 					
 				</Drawer>
+
+				<Dialog open={this.state.isDialogOpen} onClose={this.handleDialog} >
+					<DialogContent >
+						<DialogTitle>
+							<Typography variant="h4" sx={{mb:3}} textAlign="center">ورود</Typography>
+						</DialogTitle>
+						<TextField sx={{mb:2}} lable="username" type="text" fullWidth />
+						<TextField sx={{mb:2}} lable="password" type="password" fullWidth />
+					</DialogContent>
+
+					<DialogActions>
+						<Button size='large' onClick={this.handleDialog}> لغو </Button>
+						<Button size='large' onClick={this.handleLogin}> ورود </Button>
+					</DialogActions>	
+
+				</Dialog>
 				
 			</Container> 
 		</AppBar>
