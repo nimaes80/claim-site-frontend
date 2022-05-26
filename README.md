@@ -79,5 +79,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - [ ] Add Authentication
 - [ ] Add admin page
 - [X] Add first page
-- [ ] Add second page
-- [ ] Add about/contact
+- [X] Add second page
+- [X] Add about/contact
