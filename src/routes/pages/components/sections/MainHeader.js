@@ -1,3 +1,5 @@
+import { Dashboard } from '@mui/icons-material';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
 // import requests from '../../../../utils/requests';
 import CropSquareRoundedIcon from '@mui/icons-material/CropSquareRounded';
@@ -14,7 +16,6 @@ import SvgIcon from "@mui/material/SvgIcon";
 import { Container } from '@mui/system';
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 
 export default class MainHeader extends Component {
 
@@ -77,6 +78,11 @@ export default class MainHeader extends Component {
 					name: 'خروج',
 					url: '/logout/',
 					icon: <LogoutRoundedIcon />,
+				},
+				{
+					name: 'داشبوزذ ادمین',
+					url: '/logout/',
+					icon: <Dashboard />,
 				},
 				{
 					name: 'بالانس',
