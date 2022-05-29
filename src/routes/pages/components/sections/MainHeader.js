@@ -80,8 +80,8 @@ export default class MainHeader extends Component {
 					icon: <LogoutRoundedIcon />,
 				},
 				{
-					name: 'داشبوزذ ادمین',
-					url: '/logout/',
+					name: 'داشبورد ادمین',
+					url: '/dashboard/admin/',
 					icon: <Dashboard />,
 				},
 				{

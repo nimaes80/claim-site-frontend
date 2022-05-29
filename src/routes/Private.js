@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import UserBalance from './pages/UserBalance';
+import Admin from './pages/Admin';
 
 
 export default class Private extends Component {
@@ -17,7 +18,8 @@ export default class Private extends Component {
 			<>
 				<Routes>
 					<Route path='/balance/' element={<UserBalance />} />
-
+					<Route path='/admin/*' element={<Admin />} />
+					
 
 				</Routes>
 			</>

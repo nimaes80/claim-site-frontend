@@ -3,7 +3,7 @@ import TopBar from './components/home/TopBar';
 import Body from './components/home/Body';
 import ButtomBar from './components/home/ButtomBar';
 
-function Home() {
+function Home(props) {
 
 	window.screenTop = 0;
 	
@@ -11,7 +11,7 @@ function Home() {
 	return (
 			<>
 				<TopBar />
-				<Body />
+				<Body handleAuthentication={props.handleAuthentication} />
 				<ButtomBar />
 			</>
 		);

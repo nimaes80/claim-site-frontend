@@ -9,6 +9,8 @@ import Theme from './assets/js/Theme';
 import Private from './routes/Private';
 import Public from './routes/Public';
 import './services/pwa_app';
+import Alert from '@mui/material/Alert';
+
 
 const cacheRtl = createCache({
   key: 'muirtl',
@@ -21,19 +23,47 @@ export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isAuthenticated: true,
+			isAuthenticated: (localStorage.getItem('refreshToken') && new Date().getTime() >=  JSON.parse(window.atob(localStorage.getItem('refreshToken').split('.')[1])).exp * 1000),
 			isLoaded: false,
 		};
+		this.handleAuthentication = this.handleAuthentication.bind(this);
 
-	};
-	
-
-	componentDidMount(props) {
 		
 	};
 	
 
+	componentDidMount(props) {
+		const refreshToken = localStorage.getItem('refreshToken');
 
+		const isExpired = (token) => {
+			try {
+			const jwt = JSON.parse(window.atob(token.split('.')[1]));
+			return Boolean(new Date().getTime() >= jwt.exp * 1000);
+			} catch {
+				return true;
+			};
+		};
+		if (refreshToken !== null) {
+			if (!isExpired(refreshToken)) {
+				this.setState({isAuthenticated: true});
+			};
+			this.setState({isLoaded:true});
+			this.forceUpdate();
+		} else {
+			this.setState({isLoaded:true});
+		}
+		
+		
+
+	};
+	
+
+	handleAuthentication({value}) {
+		this.setState({
+			isAuthenticated: value,
+		});
+		this.forceUpdate();
+	}
 
 	
 	render() {
@@ -41,22 +71,27 @@ export default class App extends Component {
 			<BrowserRouter>
 				<CacheProvider value={cacheRtl}>
 					<ThemeProvider theme={Theme}>
-						<Routes>
-							{
-								this.state.isAuthenticated ?
-									<>
-										<Route path='/dashboard/*' element={<Private />} />
-										<Route path='/*' element={<Public />} />
-									</>
-								:
-									<>
-										<Route path='/*' element={<Public />} />
-									</>
-							}
-
-
-						</Routes>
-
+						{
+							this.state.isLoaded ?  (
+								<Routes>
+									{
+										this.state.isAuthenticated ?
+											<>
+												<Route path='/dashboard/*' element={<Private />} />
+												<Route path='/*' element={<Public handleAuthentication={this.handleAuthentication} />} />
+											</>
+										:
+											<>
+												<Route path='/*' element={<Public handleAuthentication={this.handleAuthentication} />} />
+											</>
+									}
+								</Routes>
+							)
+							:
+								<Alert severity='info' sx={{mx:'auto', textAlign:'center', my:5}}> لطفا صبر کنید... </Alert>
+						}
+						
+						
 
 					</ThemeProvider>
 					
