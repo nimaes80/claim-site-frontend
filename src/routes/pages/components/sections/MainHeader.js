@@ -1,7 +1,6 @@
 import { Dashboard } from '@mui/icons-material';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
-// import requests from '../../../../utils/requests';
 import CropSquareRoundedIcon from '@mui/icons-material/CropSquareRounded';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -15,7 +14,9 @@ import { AppBar, Avatar, Box, Button, Dialog, DialogActions, DialogContent, Dial
 import SvgIcon from "@mui/material/SvgIcon";
 import { Container } from '@mui/system';
 import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, Navigate, NavLink } from 'react-router-dom';
+import requests from '../../../../utils/requests';
+import urls from '../../../../utils/urls';
 
 export default class MainHeader extends Component {
 
@@ -29,7 +30,9 @@ export default class MainHeader extends Component {
 			isMenuOpen: false,
 			isSocialsMenuOpen:false,
 			isDialogOpen: false,
-
+			redirectLogin: false,
+			username: null,
+			password: null,
 			pages: [
 				{
 					name: "خانه",
@@ -97,11 +100,50 @@ export default class MainHeader extends Component {
 		this.handleSocialsMenu = this.handleSocialsMenu.bind(this);
 		this.handleDialog = this.handleDialog.bind(this);
 		this.handleLogin = this.handleLogin.bind(this);
+		this.handleUsername = this.handleUsername.bind(this);
+		this.handlePassword = this.handlePassword.bind(this);
 		
 	};
 
 
 	componentDidMount(){
+		if (localStorage.getItem('access') && !(new Date().getTime() >= window.atob(localStorage.getItem('access').split('.')[1]).exp * 1000)) {
+			this.setState({isAuthenticated: true});
+			this.setState({settings: [
+				{
+					name: 'خروج',
+					url: '/logout/',
+					icon: <LogoutRoundedIcon />,
+				},
+				{
+					name: 'داشبورد ادمین',
+					url: '/dashboard/admin/',
+					icon: <Dashboard />,
+				},
+				{
+					name: 'بالانس',
+					url: '/dashboard/balance/',
+					icon: <AccountCircleRoundedIcon />,
+				},
+			]})
+		} else {
+			this.setState({settings: [
+				{
+					name: 'ورود',
+					icon: <LoginRoundedIcon />,
+				},
+				{
+					name: 'داشبورد ادمین',
+					url: '/dashboard/admin/',
+					icon: <Dashboard />,
+				},
+				{
+					name: 'بالانس',
+					url: '/dashboard/balance/',
+					icon: <AccountCircleRoundedIcon />,
+				},
+			]})
+		}
 		// requests
 	};
 
@@ -124,9 +166,15 @@ export default class MainHeader extends Component {
 		});
 	}
 
-
+	handleUsername(e) {
+		this.setState({username:e.target.value})
+	}
+	handlePassword(e) {
+		this.setState({password:e.target.value})
+	}
 
 	handleDialog() {
+		window.screenTop = 0;
 		this.setState({
 			isDialogOpen: !this.state.isDialogOpen,
 		});
@@ -135,196 +183,225 @@ export default class MainHeader extends Component {
 
 
 	handleLogin() {
-
+		const data = JSON.stringify({
+			"username":this.state.username,
+			"password":this.state.password
+		});
+		if (this.state.username.length >= 4 && this.state.password.length >= 4 ) {
+			requests.post(urls.adminLogin,
+				data,
+				{
+					headers: {
+						"Authorization": null,
+						"Content-Type": "application/json"
+					}
+				}
+				)
+			.then( response => {
+				if (response.status === 200 && typeof(response.data === 'object')) {
+					localStorage.setItem('access', response.data.access);
+					localStorage.setItem('refresh', response.data.refresh);
+					this.setState({redirectLogin: true});
+				};
+			})
+			.catch(error => {
+				alert('نام کاربری یا رمز عبور نادرست است.');
+			})
+		}
 	}
 
 
   render() {
 	return (
 	  <>
-	  	<AppBar position='sticky' className="bg-gradient shadow">
-			<Container maxWidth="100%">
-				<Toolbar disableGutters>
-					<Typography variant="h6" noWrap component={Link} to='/' className="logo"
-						sx={{
-							ml: 2,
-							display: {xs:'none', md:'flex'},
-							fontWeight: 700,
-							letterSpacing: '.2rem',
-						}}
-					> LOGO لوگو </Typography>
+	  	{
+			!this.state.redirectLogin ?
+				<AppBar position='sticky' className="bg-gradient shadow">
+					<Container maxWidth="100%">
+						<Toolbar disableGutters>
+							<Typography variant="h6" noWrap component={Link} to='/' className="logo"
+								sx={{
+									ml: 2,
+									display: {xs:'none', md:'flex'},
+									fontWeight: 700,
+									letterSpacing: '.2rem',
+								}}
+							> LOGO لوگو </Typography>
 
-					<Box sx={{ flexGrow:1, display:{ xs:'flex', md:'none'} }}>
-						<IconButton size="large" 
-							aria-label="drawe menu"
-							aria-controls="menu-drawer"
-							onClick={this.handleDrawer}
-							>
-								<MenuIcon sx={{color:"var(--color-neutral-200);"}} />
-						</IconButton>
-					</Box>
-
-					<Typography variant="h5" noWrap component={Link} to='/' className="logo"
-						sx={{
-							display:{xs:"flex", md:'none'},
-							flexGrow: 1,
-							fontWeight: 700,
-							letterSpacing: '.2rem',
-							fontSize: 18
-						}}
-					>
-						LOGO لوگو
-					</Typography>
-					
-					<Box sx={{flexGrow: 1, display: {xs:'none', md:'flex'}}}>
-						{
-							this.state.pages.map((page, i) => (
-								<Button startIcon={page.icon} key={i} component={NavLink} to={page.url} className="main-nav-link"
-									sx={{
-										p:1,
-										ml:{md:2.5, lg:5},
-									}}>
-									{page.name}
-								</Button>
-							))
-						}						
-					</Box>
-					<Box sx={{mr:2, display: {xs:'none', md:'flex'}}}>
-						{
-							this.state.socials.length <= 3 ?
-								this.state.socials.map((social, i) => (
-									<Button startIcon={social.icon} key={i} component="a" href={social.url} target="_blank" 
-										sx={{
-											p:1,
-											ml:{md:2.5, lg:5},
-											color: 'var(--color-neutral-100);'
-										}}>
-										{social.name}
-									</Button>
-								))
-							:
-							<>
-							<Tooltip title="شبکه‌های اجتماعی" placement="right-end">
-								<IconButton onClick={this.handleSocialsMenu} >
-									<PublicRoundedIcon sx={{color:"var(--color-neutral-100);"}} />
+							<Box sx={{ flexGrow:1, display:{ xs:'flex', md:'none'} }}>
+								<IconButton size="large" 
+									aria-label="drawe menu"
+									aria-controls="menu-drawer"
+									onClick={this.handleDrawer}
+									>
+										<MenuIcon sx={{color:"var(--color-neutral-200);"}} />
 								</IconButton>
-							</Tooltip>
-							<Menu
-								sx={{mt:'45px', mr:7, display: {xs:'none', md:'flex'}}}
-								id="socials-menu-appbar"
-									anchorOrigin={{ vertical:'top', horizontal:'end'}}
-								
-								transformOrigin={{vertical: 'top', horizontal: 'end'}}
-								open={this.state.isSocialsMenuOpen}
-								onClose={this.handleSocialsMenu}
+							</Box>
+
+							<Typography variant="h5" noWrap component={Link} to='/' className="logo"
+								sx={{
+									display:{xs:"flex", md:'none'},
+									flexGrow: 1,
+									fontWeight: 700,
+									letterSpacing: '.2rem',
+									fontSize: 18
+								}}
 							>
+								LOGO لوگو
+							</Typography>
+							
+							<Box sx={{flexGrow: 1, display: {xs:'none', md:'flex'}}}>
 								{
-
-									this.state.socials.map((social, i) => (
-										<MenuItem component="a" className="main-nav-link" target="_blank" href={social.url} key={i} onClick={this.handleSocialsMenu} sx={{py:0}}>
-											<Button>
-												<SvgIcon sx={{color:social.color, px:1}}>{ social.icon }</SvgIcon>
-												<Typography sx={{color:"#000"}}>{social.name}</Typography>
-											</Button>
-										</MenuItem>
+									this.state.pages.map((page, i) => (
+										<Button startIcon={page.icon} key={i} component={NavLink} to={page.url} className="main-nav-link"
+											sx={{
+												p:1,
+												ml:{md:2.5, lg:5},
+											}}>
+											{page.name}
+										</Button>
 									))
-								}
-
-
-								
-							</Menu>
-							</>
-						}
-					</Box>
-
-					<Box sx={{flexGrow:0}}>
-						<Tooltip title="اکانت" placement='bottom-end'>
-							<IconButton onClick={this.handleMenu} sx={{p:0}}>
-								<Avatar alt="Profile" src={null} />
-							</IconButton>
-						</Tooltip>
-						<Menu 
-							sx={{mt:'45px', }}
-							id="menu-appbar"
-							anchorOrigin={{ vertical:'top', horizontal:'left'}}
-							transformOrigin={{vertical: 'top', horizontal: 'left'}}
-							open={this.state.isMenuOpen}
-							onClose={this.handleMenu}
-						>
-							{
-
-								this.state.settings.map((setting, i) => (
-									setting.url ? (
-										<MenuItem component={Link} to={setting.url} key={i} onClick={this.handleMenu} sx={{py:0}}>
-											<Button startIcon={setting.icon} >
-												{setting.name}
+								}						
+							</Box>
+							<Box sx={{mr:2, display: {xs:'none', md:'flex'}}}>
+								{
+									this.state.socials.length <= 3 ?
+										this.state.socials.map((social, i) => (
+											<Button startIcon={social.icon} key={i} component="a" href={social.url} target="_blank" 
+												sx={{
+													p:1,
+													ml:{md:2.5, lg:5},
+													color: 'var(--color-neutral-100);'
+												}}>
+												{social.name}
 											</Button>
-										</MenuItem>
-									)
+										))
 									:
-									(
-										<MenuItem key={i} onClick={this.handleMenu} sx={{py:0}}>
-											<Button startIcon={setting.icon} onClick={this.handleDialog}>
-												{setting.name}
-											</Button>
-										</MenuItem>
-									)
-								))
-							}
+									<>
+									<Tooltip title="شبکه‌های اجتماعی" placement="right-end">
+										<IconButton onClick={this.handleSocialsMenu} >
+											<PublicRoundedIcon sx={{color:"var(--color-neutral-100);"}} />
+										</IconButton>
+									</Tooltip>
+									<Menu
+										sx={{mt:'45px', mr:7, display: {xs:'none', md:'flex'}}}
+										id="socials-menu-appbar"
+											anchorOrigin={{ vertical:'top', horizontal:'end'}}
+										
+										transformOrigin={{vertical: 'top', horizontal: 'end'}}
+										open={this.state.isSocialsMenuOpen}
+										onClose={this.handleSocialsMenu}
+									>
+										{
+
+											this.state.socials.map((social, i) => (
+												<MenuItem component="a" className="main-nav-link" target="_blank" href={social.url} key={i} onClick={this.handleSocialsMenu} sx={{py:0}}>
+													<Button>
+														<SvgIcon sx={{color:social.color, px:1}}>{ social.icon }</SvgIcon>
+														<Typography sx={{color:"#000"}}>{social.name}</Typography>
+													</Button>
+												</MenuItem>
+											))
+										}
+
+
+										
+									</Menu>
+									</>
+								}
+							</Box>
+
+							<Box sx={{flexGrow:0}}>
+								<Tooltip title="اکانت" placement='bottom-end'>
+									<IconButton onClick={this.handleMenu} sx={{p:0}}>
+										<Avatar alt="Profile" src={null} />
+									</IconButton>
+								</Tooltip>
+								<Menu 
+									sx={{mt:'45px', }}
+									id="menu-appbar"
+									anchorOrigin={{ vertical:'top', horizontal:'left'}}
+									transformOrigin={{vertical: 'top', horizontal: 'left'}}
+									open={this.state.isMenuOpen}
+									onClose={this.handleMenu}
+								>
+									{
+
+										this.state.settings.map((setting, i) => (
+											setting.url ? (
+												<MenuItem component={Link} to={setting.url} key={i} onClick={this.handleMenu} sx={{py:0}}>
+													<Button startIcon={setting.icon} >
+														{setting.name}
+													</Button>
+												</MenuItem>
+											)
+											:
+											(
+												<MenuItem key={i} onClick={this.handleMenu} sx={{py:0}}>
+													<Button startIcon={setting.icon} onClick={this.handleDialog}>
+														{setting.name}
+													</Button>
+												</MenuItem>
+											)
+										))
+									}
+
+
+									
+								</Menu>
+							</Box>
 
 
 							
-						</Menu>
-					</Box>
+						</Toolbar>
 
+						<Drawer open={this.state.isDrawerOpen} anchor="left" onClose={this.handleDrawer} sx={{display:{xs:'block', md:'none'}}} transitionDuration={300} className="opacity-90">
+							<List sx={{width:300}} className="opacity-90">
+								<ListItem className="center "> LOGO لوگو </ListItem>
+								<Divider sx={{my:1}} />
+								{
+									this.state.pages.map((page, i) => (
+										<ListItemButton key={i} component={NavLink} to={page.url} className="drawer-link" onClick={this.handleDrawer}>
+											<ListItemIcon>{page.icon}</ListItemIcon>
+											<ListItemText>{page.name}</ListItemText>
+										</ListItemButton>
+									))
+								}
+								<Divider sx={{my:1}} />
+								{
+									this.state.socials.map((social, i) => (
+										<ListItemButton key={i} component='a' target="_blank" href={social.url}  onClick={this.handleDrawer}>
+											<ListItemIcon sx={{color:social.color ? social.color : "#000"}}>{social.icon}</ListItemIcon>
+											<ListItemText>{social.name}</ListItemText>
+										</ListItemButton>
+									))
+								}
 
-					
-				</Toolbar>
+							</List>
+							
+						</Drawer>
 
-				<Drawer open={this.state.isDrawerOpen} anchor="left" onClose={this.handleDrawer} sx={{display:{xs:'block', md:'none'}}} transitionDuration={300} className="opacity-90">
-					<List sx={{width:300}} className="opacity-90">
-						<ListItem className="center "> LOGO لوگو </ListItem>
-						<Divider sx={{my:1}} />
-						{
-							this.state.pages.map((page, i) => (
-								<ListItemButton key={i} component={NavLink} to={page.url} className="drawer-link" onClick={this.handleDrawer}>
-									<ListItemIcon>{page.icon}</ListItemIcon>
-									<ListItemText>{page.name}</ListItemText>
-								</ListItemButton>
-							))
-						}
-						<Divider sx={{my:1}} />
-						{
-							this.state.socials.map((social, i) => (
-								<ListItemButton key={i} component='a' target="_blank" href={social.url}  onClick={this.handleDrawer}>
-									<ListItemIcon sx={{color:social.color ? social.color : "#000"}}>{social.icon}</ListItemIcon>
-									<ListItemText>{social.name}</ListItemText>
-								</ListItemButton>
-							))
-						}
+						<Dialog open={this.state.isDialogOpen} onClose={this.handleDialog} >
+							<DialogContent >
+								<DialogTitle >
+									<Typography fontSize={30} sx={{mb:3}} textAlign="center">ورود</Typography>
+								</DialogTitle>
+									<TextField onChange={this.handleUsername} sx={{mb:2}} name='username' label="نام کاربری" type="text" fullWidth  />
+									<TextField onChange={this.handlePassword} sx={{mb:2}} name='password' label="گذرواژه" type="password" fullWidth  />
+							</DialogContent>
 
-					</List>
-					
-				</Drawer>
+							<DialogActions>
+								<Button size='large' onClick={this.handleDialog}> لغو </Button>
+								<Button size='large' onClick={this.handleLogin}> ورود </Button>
+							</DialogActions>	
 
-				<Dialog open={this.state.isDialogOpen} onClose={this.handleDialog} >
-					<DialogContent >
-						<DialogTitle>
-							<Typography variant="h4" sx={{mb:3}} textAlign="center">ورود</Typography>
-						</DialogTitle>
-						<TextField sx={{mb:2}} lable="username" type="text" fullWidth />
-						<TextField sx={{mb:2}} lable="password" type="password" fullWidth />
-					</DialogContent>
-
-					<DialogActions>
-						<Button size='large' onClick={this.handleDialog}> لغو </Button>
-						<Button size='large' onClick={this.handleLogin}> ورود </Button>
-					</DialogActions>	
-
-				</Dialog>
-				
-			</Container> 
-		</AppBar>
+						</Dialog>
+						
+					</Container> 
+				</AppBar>
+			:
+			<Navigate to='/dashboard/admin/' />
+		}
 	  </>
 	);
   };

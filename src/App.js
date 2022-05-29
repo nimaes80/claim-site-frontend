@@ -23,8 +23,9 @@ export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isAuthenticated: (localStorage.getItem('refreshToken') && new Date().getTime() >=  JSON.parse(window.atob(localStorage.getItem('refreshToken').split('.')[1])).exp * 1000),
-			isLoaded: false,
+			// isAuthenticated: (localStorage.getItem('refreshToken') && new Date().getTime() >=  JSON.parse(window.atob(localStorage.getItem('refreshToken').split('.')[1])).exp * 1000),
+			isAuthenticated: true,
+			isLoaded: true,
 		};
 		this.handleAuthentication = this.handleAuthentication.bind(this);
 
@@ -32,30 +33,30 @@ export default class App extends Component {
 	};
 	
 
-	componentDidMount(props) {
-		const refreshToken = localStorage.getItem('refreshToken');
+	// componentDidMount(props) {
+	// 	const refreshToken = localStorage.getItem('refreshToken');
 
-		const isExpired = (token) => {
-			try {
-			const jwt = JSON.parse(window.atob(token.split('.')[1]));
-			return Boolean(new Date().getTime() >= jwt.exp * 1000);
-			} catch {
-				return true;
-			};
-		};
-		if (refreshToken !== null) {
-			if (!isExpired(refreshToken)) {
-				this.setState({isAuthenticated: true});
-			};
-			this.setState({isLoaded:true});
-			this.forceUpdate();
-		} else {
-			this.setState({isLoaded:true});
-		}
+	// 	const isExpired = (token) => {
+	// 		try {
+	// 		const jwt = JSON.parse(window.atob(token.split('.')[1]));
+	// 		return Boolean(new Date().getTime() >= jwt.exp * 1000);
+	// 		} catch {
+	// 			return true;
+	// 		};
+	// 	};
+	// 	if (refreshToken !== null) {
+	// 		if (!isExpired(refreshToken)) {
+	// 			this.setState({isAuthenticated: true});
+	// 		};
+	// 		this.setState({isLoaded:true});
+	// 		this.forceUpdate();
+	// 	} else {
+	// 		this.setState({isLoaded:true});
+	// 	}
 		
 		
 
-	};
+	// };
 	
 
 	handleAuthentication({value}) {

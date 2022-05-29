@@ -81,7 +81,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
 	const theme = useTheme();
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = React.useState(true);
 	const datas = [ 
 		{text: 'تنظیمات سایت', url:'settings/', icon: <SettingsIcon />},
 		{text: 'کاربران', url:'/users', icon: <GroupIcon />},
@@ -158,7 +158,11 @@ export default function PersistentDrawerLeft() {
 				
 				<Routes>
 						<Route path="/settings/" element={<Settings />} />
-
+						<Route path="/users/" element={<Settings />} />
+						<Route path="/faq/" element={<Settings />} />
+						<Route path="/faq/update/:id/" element={<Settings />} />
+						<Route path="/socials/" element={<Settings />} />
+						<Route path="/socials/update/:id/" element={<Settings />} />
 
 
 				</Routes>

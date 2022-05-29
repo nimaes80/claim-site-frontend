@@ -5,6 +5,7 @@ import About from './pages/About';
 import MainHeader from './pages/components/sections/MainHeader';
 import Contact from './pages/Contact';
 import Home from './pages/Home';
+import Logout from './pages/Logout';
 
 
 function Public(props) {
@@ -15,6 +16,7 @@ function Public(props) {
 				<Route index element={<Home handleAuthentication={props.handleAuthentication} />} />
 				<Route path='/about/' element={<About />} />
 				<Route path='/contact/' element={<Contact />} />
+				<Route path='/logout/' element={<Logout />} />
 				<Route path='/*' element={<Error404NotFound />} />
 			
 			</Routes>

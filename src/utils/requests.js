@@ -20,18 +20,15 @@ const isExpired = (token) => {
 		return true;
 	};
 };
-
+	
 
 if (refreshToken !== null) {
 	if (Boolean(!isExpired(refreshToken))){
 		if (accessToken !== null) {
 			if (!isExpired(accessToken)){
 				requests.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-				
-
 			} else {
-				console.log('Authorizaton added');
-				localStorage.clear('accessToken');
+
 				requests.post(
 					urls.refreshToken, {
 						'refresh': refreshToken
@@ -40,7 +37,7 @@ if (refreshToken !== null) {
 						localStorage.setItem('accessToken', response.data.access);
 						requests.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
 					}).catch( (err) => {
-						console.log('Access token & refresh token is not valid.');
+						console.log('Access token & refresh token invalid.');
 					});
 			};
 		} else {
@@ -52,13 +49,10 @@ if (refreshToken !== null) {
 					localStorage.setItem('accessToken', response.data.access);
 					requests.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
 				}).catch( (err) => {
-					console.log('Access token & refresh token is not valid.');
+					console.log('Access token & refresh token invalid.');
 				});
 			};
-		} else {
-			localStorage.clear('accessToken');
-			localStorage.clear('refreshToken');
-	}
+		} 
 };
 
 
