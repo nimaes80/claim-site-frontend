@@ -1,30 +1,17 @@
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import MenuIcon from '@mui/icons-material/Menu';
-import SettingsIcon from '@mui/icons-material/Settings';
-import MuiAppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import { styled, useTheme } from '@mui/material/styles';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import * as React from 'react';
-import { NavLink, Route, Routes } from 'react-router-dom';
-import Settings from './components/admin/Settings';
 import GroupIcon from '@mui/icons-material/Group';
-import SourceIcon from '@mui/icons-material/Source';
+import MenuIcon from '@mui/icons-material/Menu';
 import PublicIcon from '@mui/icons-material/Public';
-
-
-
+import SettingsIcon from '@mui/icons-material/Settings';
+import SourceIcon from '@mui/icons-material/Source';
+import { Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, Toolbar, Typography } from '@mui/material';
+import MuiAppBar from '@mui/material/AppBar';
+import { useState } from 'react';
+import { NavLink, Route, Routes } from 'react-router-dom';
+import FAQ from './components/admin/FAQ';
+import Settings from './components/admin/Settings';
+import Socials from './components/admin/Socials';
+import UserList from './components/admin/UserList';
 
 
 const drawerWidth = 240;
@@ -80,15 +67,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 export default function PersistentDrawerLeft() {
-	const theme = useTheme();
-	const [open, setOpen] = React.useState(true);
+	const [open, setOpen] = useState(true);
 	const datas = [ 
 		{text: 'تنظیمات سایت', url:'settings/', icon: <SettingsIcon />},
-		{text: 'کاربران', url:'/users', icon: <GroupIcon />},
-		{text: 'سوالات متداول', url:'/faq', icon:<SourceIcon />},
-		{text: 'شبکه‌های اجتماعی', url:'/socials', icon:<PublicIcon />}	,
-		{text: '', url:'', icon:''},
-		{text: '', url:'', icon:''},
+		{text: 'کاربران', url:'users', icon: <GroupIcon />},
+		{text: 'سوالات متداول', url:'faq', icon:<SourceIcon />},
+		{text: 'شبکه‌های اجتماعی', url:'socials', icon:<PublicIcon />}	,
 		{text: '', url:'', icon:''},
 	];
 
@@ -134,14 +118,14 @@ export default function PersistentDrawerLeft() {
 			>
 				<DrawerHeader>
 					<IconButton onClick={handleDrawerClose}>
-						{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+					<ChevronRightIcon />
 					</IconButton>
 				</DrawerHeader>
 				<Divider />
 				<List>
 					{ datas.map((data, index) => (
 						<ListItem key={index} disablePadding>
-							<ListItemButton component={NavLink} to={data.url}>
+							<ListItemButton component={NavLink} className="drawer-link" to={data.url}>
 								<ListItemIcon>
 									{data.icon}
 								</ListItemIcon>
@@ -158,10 +142,10 @@ export default function PersistentDrawerLeft() {
 				
 				<Routes>
 						<Route path="/settings/" element={<Settings />} />
-						<Route path="/users/" element={<Settings />} />
-						<Route path="/faq/" element={<Settings />} />
+						<Route path="/users/" element={<UserList />} />
+						<Route path="/faq/" element={<FAQ />} />
 						<Route path="/faq/update/:id/" element={<Settings />} />
-						<Route path="/socials/" element={<Settings />} />
+						<Route path="/socials/" element={<Socials />} />
 						<Route path="/socials/update/:id/" element={<Settings />} />
 
 

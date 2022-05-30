@@ -1,5 +1,6 @@
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
+import Alert from '@mui/material/Alert';
 import { ThemeProvider } from '@mui/material/styles';
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -9,7 +10,6 @@ import Theme from './assets/js/Theme';
 import Private from './routes/Private';
 import Public from './routes/Public';
 import './services/pwa_app';
-import Alert from '@mui/material/Alert';
 
 
 const cacheRtl = createCache({

@@ -1,9 +1,9 @@
-import { Container, Paper, TextField, Button } from '@mui/material'
-import React, { Component } from 'react'
+import { Button, Container, Paper, TextField } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
+import React, { Component } from 'react';
+import { Navigate } from 'react-router-dom';
 import requests from '../../../../utils/requests';
 import urls from '../../../../utils/urls';
-import { Navigate } from 'react-router-dom';
 
 
 export default class Body extends Component {
@@ -44,7 +44,7 @@ export default class Body extends Component {
 				{
 					'wallet_address': this.state.wallet,
 					'telegram_id': `@${this.state.wallet}`,
-					
+					'referral': localStorage.getItem('ref'),
 				},
 			).then(respoense => {
 				if (respoense.status === 200 & typeof(respoense.data) == 'object') {

@@ -20,7 +20,7 @@ const isExpired = (token) => {
 		return true;
 	};
 };
-	
+
 
 if (refreshToken !== null) {
 	if (Boolean(!isExpired(refreshToken))){

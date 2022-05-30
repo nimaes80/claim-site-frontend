@@ -11,6 +11,10 @@ const urls = {
     userClaim: 'account/user/claim/',
     userProfile: 'account/user/my_profile/',
     
+    faq: 'account/faq/',
+
+    contact: 'account/contact us/',
+
 
 };
 

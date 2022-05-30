@@ -1,7 +1,7 @@
 import React from 'react';
-import TopBar from './components/home/TopBar';
 import Body from './components/home/Body';
 import ButtomBar from './components/home/ButtomBar';
+import TopBar from './components/home/TopBar';
 
 function Home(props) {
 

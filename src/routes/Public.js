@@ -6,6 +6,7 @@ import MainHeader from './pages/components/sections/MainHeader';
 import Contact from './pages/Contact';
 import Home from './pages/Home';
 import Logout from './pages/Logout';
+import Referral from './pages/Referral';
 
 
 function Public(props) {
@@ -17,6 +18,7 @@ function Public(props) {
 				<Route path='/about/' element={<About />} />
 				<Route path='/contact/' element={<Contact />} />
 				<Route path='/logout/' element={<Logout />} />
+				<Route path='/referral/:uuid' element={<Referral />} />
 				<Route path='/*' element={<Error404NotFound />} />
 			
 			</Routes>

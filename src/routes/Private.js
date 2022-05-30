@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import UserBalance from './pages/UserBalance';
 import Admin from './pages/Admin';
+import UserBalance from './pages/UserBalance';
 
 
 export default class Private extends Component {

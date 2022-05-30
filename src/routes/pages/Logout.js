@@ -1,5 +1,5 @@
 import { Alert } from '@mui/material';
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 
 export default class Logout extends Component {
