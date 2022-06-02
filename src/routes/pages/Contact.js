@@ -14,7 +14,7 @@ function Contact() {
 				<FormControl sx={{width:{xs:"100%", md:"75%"}}} className="center">
 					<TextField type='text' sx={{my:2, }} label="نام و نام خانوادگی" fullWidth />
 					<TextField type='email' sx={{my:2, }} label="ایمیل" fullWidth />
-					<TextField type='tel' sx={{my:2, }} minRows label="شماره موبایل" fullWidth />
+					<TextField type='tel' sx={{my:2, }} label="شماره موبایل" fullWidth />
 					<TextField sx={{mt:2, mb:5 }} minRows={10} label="متن درخواست" fullWidth />
 
 				</FormControl>

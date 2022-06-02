@@ -16,6 +16,11 @@ const urls = {
     contact: 'account/contact us/',
 
 
+    systemSetting: 'account/system_setting/',
+
+
+    globalInfo: 'account/globalinfo/',
+
 };
 
 export default urls;

@@ -1,18 +1,20 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ConnectWithoutContactRoundedIcon from '@mui/icons-material/ConnectWithoutContactRounded';
 import GroupIcon from '@mui/icons-material/Group';
 import MenuIcon from '@mui/icons-material/Menu';
-import PublicIcon from '@mui/icons-material/Public';
+import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SourceIcon from '@mui/icons-material/Source';
 import { Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, Toolbar, Typography } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
-import { useState } from 'react';
-import { NavLink, Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
+import requests from '../../utils/requests';
+import urls from '../../utils/urls';
 import FAQ from './components/admin/FAQ';
 import Settings from './components/admin/Settings';
 import Socials from './components/admin/Socials';
 import UserList from './components/admin/UserList';
-
 
 const drawerWidth = 240;
 
@@ -72,9 +74,11 @@ export default function PersistentDrawerLeft() {
 		{text: 'تنظیمات سایت', url:'settings/', icon: <SettingsIcon />},
 		{text: 'کاربران', url:'users', icon: <GroupIcon />},
 		{text: 'سوالات متداول', url:'faq', icon:<SourceIcon />},
-		{text: 'شبکه‌های اجتماعی', url:'socials', icon:<PublicIcon />}	,
-		{text: '', url:'', icon:''},
+		{text: 'شبکه‌های اجتماعی', url:'socials', icon:<ConnectWithoutContactRoundedIcon />}	,
+		{text: 'متغیرات عمومی', url:'globals', icon:<PublicRoundedIcon />},
 	];
+	const [redirect, setRedirect] = useState(false);
+	const [isLoaded, setIsLoaded] = useState(false);
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -84,77 +88,105 @@ export default function PersistentDrawerLeft() {
 		setOpen(false);
 	};
 
+	useEffect(() => {
+		requests.get(urls.userProfile, {
+			headers: { 'Authorization': `Bearer ${localStorage.getItem('access')}` }
+		})
+		.then(response => {
+			if (response.status === 200 && typeof(response.data) === 'object' ) {
+				setIsLoaded(true);
+				setRedirect(false);
+			}
+		})
+		.catch(error => {
+			setIsLoaded(true);
+			setRedirect(true);
+		})
+	});
+
 	return (
-		<Box sx={{ display: 'flex' }}>
-			<CssBaseline />
-			<AppBar position="fixed" open={open}>
-				<Toolbar>
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						onClick={handleDrawerOpen}
-						edge="start"
-						sx={{ mr: 2, ...(open && { display: 'none' }) }}
-					>
-						<MenuIcon />
-					</IconButton>
-					<Typography variant="h6" noWrap component="div">
-						LOGO
-					</Typography>
-				</Toolbar>
-			</AppBar>
-			<Drawer
-				sx={{
-					width: drawerWidth,
-					flexShrink: 0,
-					'& .MuiDrawer-paper': {
-						width: drawerWidth,
-						boxSizing: 'border-box',
-					},
-				}}
-				variant="persistent"
-				anchor="left"
-				open={open}
-			>
-				<DrawerHeader>
-					<IconButton onClick={handleDrawerClose}>
-					<ChevronRightIcon />
-					</IconButton>
-				</DrawerHeader>
-				<Divider />
-				<List>
-					{ datas.map((data, index) => (
-						<ListItem key={index} disablePadding>
-							<ListItemButton component={NavLink} className="drawer-link" to={data.url}>
-								<ListItemIcon>
-									{data.icon}
-								</ListItemIcon>
-								<ListItemText primary={data.text} />
-							</ListItemButton>
+		<>
+			{
+				isLoaded ? 
+					!redirect ? <Box sx={{ display: 'flex' }}>
+						<CssBaseline />
+						<AppBar position="fixed" open={open}>
+							<Toolbar>
+								<IconButton
+									color="inherit"
+									aria-label="open drawer"
+									onClick={handleDrawerOpen}
+									edge="start"
+									sx={{ mr: 2, ...(open && { display: 'none' }) }}
+								>
+									<MenuIcon />
+								</IconButton>
+								<Typography variant="h6" noWrap component="div">
+									LOGO
+								</Typography>
+							</Toolbar>
+						</AppBar>
+						<Drawer
+							sx={{
+								width: drawerWidth,
+								flexShrink: 0,
+								'& .MuiDrawer-paper': {
+									width: drawerWidth,
+									boxSizing: 'border-box',
+								},
+							}}
+							variant="persistent"
+							anchor="left"
+							open={open}
+						>
+							<DrawerHeader>
+								<IconButton onClick={handleDrawerClose}>
+								<ChevronRightIcon />
+								</IconButton>
+							</DrawerHeader>
 							<Divider />
-						</ListItem>
-					))}
-				</List>
-				
-			</Drawer>
-			<Main open={open}>
-				<DrawerHeader />
-				
-				<Routes>
-						<Route path="/settings/" element={<Settings />} />
-						<Route path="/users/" element={<UserList />} />
-						<Route path="/faq/" element={<FAQ />} />
-						<Route path="/faq/update/:id/" element={<Settings />} />
-						<Route path="/socials/" element={<Socials />} />
-						<Route path="/socials/update/:id/" element={<Settings />} />
+							<List>
+								{ datas.map((data, index) => (
+									<ListItem key={index} disablePadding>
+										<ListItemButton component={NavLink} className="drawer-link" to={data.url}>
+											<ListItemIcon>
+												{data.icon}
+											</ListItemIcon>
+											<ListItemText primary={data.text} />
+										</ListItemButton>
+										<Divider />
+									</ListItem>
+								))}
+							</List>
+							
+						</Drawer>
+						<Main open={open}>
+							<DrawerHeader />
+							
+							<Routes>
+									<Route path="/settings/" element={<Settings />} />
+									<Route path="/users/" element={<UserList />} />
+									<Route path="/faq/" element={<FAQ />} />
+									<Route path="/faq/update/:id/" element={<Settings />} />
+									<Route path="/socials/" element={<Socials />} />
+									<Route path="/socials/update/:id/" element={<Settings />} />
+			
+			
+							</Routes>
+			
+			
+			
+						</Main>
+			
+						</Box>
+					:
+						<Navigate to='/' />
+				:
+				null
 
-
-				</Routes>
-
-
-
-			</Main>
-
-		</Box>
+			}
+		
+		</>
+		
 	);
 }
