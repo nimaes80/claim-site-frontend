@@ -1,15 +1,12 @@
 import { Dashboard } from '@mui/icons-material';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
-import CropSquareRoundedIcon from '@mui/icons-material/CropSquareRounded';
-import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MenuIcon from '@mui/icons-material/Menu';
 import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
-import RocketLaunchRoundedIcon from '@mui/icons-material/RocketLaunchRounded';
 import { AppBar, Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, TextField, Toolbar, Tooltip, Typography } from '@mui/material';
 import SvgIcon from "@mui/material/SvgIcon";
 import { Container } from '@mui/system';
@@ -17,6 +14,8 @@ import React, { Component } from 'react';
 import { Link, Navigate, NavLink } from 'react-router-dom';
 import requests from '../../../../utils/requests';
 import urls from '../../../../utils/urls';
+const HtmlToReactParser = require('html-to-react').Parser;
+const htmlToReactParser = new HtmlToReactParser();
 
 export default class MainHeader extends Component {
 
@@ -55,19 +54,19 @@ export default class MainHeader extends Component {
 				{
 					name: 'فیسبوک',
 					url: 'https://facebook.com',
-					icon: <FacebookRoundedIcon />,
+					icon: '',
 					color: '#4267B2',
 				},
 				{
 					name: 'تلگرام',
 					url: 'https://telegram.com',
-					icon: <RocketLaunchRoundedIcon />,
+					icon: '',
 					color: '#229ED9',
 				},
 				{
 					name: 'روبیکا',
 					url: 'https://rubika.ir/',
-					icon: <CropSquareRoundedIcon />,
+					icon: `<svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium muirtl-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="SettingsIcon"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"></path></svg>`,
 					color: '#000',
 				},
 
@@ -144,6 +143,14 @@ export default class MainHeader extends Component {
 				},
 			]})
 		}
+
+		requests.get(urls.socials)
+			.then(response => {
+
+			})
+			.catch(error => {
+
+			})
 	};
 
 	
@@ -266,7 +273,7 @@ export default class MainHeader extends Component {
 								{
 									this.state.socials.length <= 3 ?
 										this.state.socials.map((social, i) => (
-											<Button startIcon={social.icon} key={i} component="a" href={social.url} target="_blank" 
+											<Button startIcon={ htmlToReactParser.parse(social.icon) } key={i} component="a" href={social.url} target="_blank" 
 												sx={{
 													p:1,
 													ml:{md:2.5, lg:5},
@@ -296,7 +303,7 @@ export default class MainHeader extends Component {
 											this.state.socials.map((social, i) => (
 												<MenuItem component="a" className="main-nav-link" target="_blank" href={social.url} key={i} onClick={this.handleSocialsMenu} sx={{py:0}}>
 													<Button>
-														<SvgIcon sx={{color:social.color, px:1}}>{ social.icon }</SvgIcon>
+														<SvgIcon sx={{color:social.color, px:1}}>{ htmlToReactParser.parse(social.icon) }</SvgIcon>
 														<Typography sx={{color:"#000"}}>{social.name}</Typography>
 													</Button>
 												</MenuItem>
@@ -370,7 +377,7 @@ export default class MainHeader extends Component {
 								{
 									this.state.socials.map((social, i) => (
 										<ListItemButton key={i} component='a' target="_blank" href={social.url}  onClick={this.handleDrawer}>
-											<ListItemIcon sx={{color:social.color ? social.color : "#000"}}>{social.icon}</ListItemIcon>
+											<ListItemIcon sx={{color:social.color ? social.color : "#000"}}>{ htmlToReactParser.parse(social.icon) }</ListItemIcon>
 											<ListItemText>{social.name}</ListItemText>
 										</ListItemButton>
 									))

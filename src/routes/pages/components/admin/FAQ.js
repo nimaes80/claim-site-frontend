@@ -120,7 +120,6 @@ export default class FAQ extends Component {
 		textareas.forEach(textarea => {
 			textarea.value = '';
 		});
-		alert('ویرایش شد.')
 	};
 
 

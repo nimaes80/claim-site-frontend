@@ -1,5 +1,6 @@
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ConnectWithoutContactRoundedIcon from '@mui/icons-material/ConnectWithoutContactRounded';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import GroupIcon from '@mui/icons-material/Group';
 import MenuIcon from '@mui/icons-material/Menu';
 import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
@@ -11,7 +12,10 @@ import { useEffect, useState } from 'react';
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import requests from '../../utils/requests';
 import urls from '../../utils/urls';
+import Error404NotFound from '../Error404NotFound';
+import ContactUs from './components/admin/ContactUs';
 import FAQ from './components/admin/FAQ';
+import GlobalSetting from './components/admin/GlobalSetting';
 import Settings from './components/admin/Settings';
 import Socials from './components/admin/Socials';
 import UserList from './components/admin/UserList';
@@ -67,7 +71,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 
-
 export default function PersistentDrawerLeft() {
 	const [open, setOpen] = useState(true);
 	const datas = [ 
@@ -76,6 +79,7 @@ export default function PersistentDrawerLeft() {
 		{text: 'سوالات متداول', url:'faq', icon:<SourceIcon />},
 		{text: 'شبکه‌های اجتماعی', url:'socials', icon:<ConnectWithoutContactRoundedIcon />}	,
 		{text: 'متغیرات عمومی', url:'globals', icon:<PublicRoundedIcon />},
+		{text: 'پیغام‌ها', url:'contact', icon:<EmailRoundedIcon />},
 	];
 	const [redirect, setRedirect] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -164,13 +168,18 @@ export default function PersistentDrawerLeft() {
 							<DrawerHeader />
 							
 							<Routes>
+									<Route path="/" element={<></>} />
 									<Route path="/settings/" element={<Settings />} />
 									<Route path="/users/" element={<UserList />} />
 									<Route path="/faq/" element={<FAQ />} />
-									<Route path="/faq/update/:id/" element={<Settings />} />
 									<Route path="/socials/" element={<Socials />} />
-									<Route path="/socials/update/:id/" element={<Settings />} />
-			
+									<Route path="/globals/" element={<GlobalSetting />} />
+									<Route path="/contact/" element={<ContactUs />} />
+									<Route path="/contact/:id" element={<ContactUs />} />
+									
+									
+									<Route path='/*' element={<Error404NotFound />} />
+									
 			
 							</Routes>
 			

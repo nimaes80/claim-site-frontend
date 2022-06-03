@@ -21,6 +21,8 @@ const urls = {
 
     globalInfo: 'account/globalinfo/',
 
+
+    socials: 'account/socials/',
 };
 
 export default urls;

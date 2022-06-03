@@ -12,13 +12,13 @@ export default function PersistentDrawerLeft() {
 
 	const handlesetClaimPoint = (e) => {
 		setClaimPoint(e.target.value);
-	}
+	};
 	const handlesetSubsetPoint = (e) => {
 		setSubsetPoint(e.target.value);
-	}
+	};
 	const handlesetClaimPeriod = (e) => {
 		setClaimPeriod(e.target.value);
-	}
+	};
 
 	const submit = () => {
 		requests.post(urls.systemSetting, {
@@ -54,7 +54,7 @@ export default function PersistentDrawerLeft() {
 			});
 
 
-	}, [])
+	}, []);
 
 
 	return (
