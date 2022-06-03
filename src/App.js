@@ -10,6 +10,7 @@ import Theme from './assets/js/Theme';
 import Private from './routes/Private';
 import Public from './routes/Public';
 import './services/pwa_app';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 
 
 const cacheRtl = createCache({
@@ -23,8 +24,7 @@ export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// isAuthenticated: (localStorage.getItem('refreshToken') && new Date().getTime() >=  JSON.parse(window.atob(localStorage.getItem('refreshToken').split('.')[1])).exp * 1000),
-			isAuthenticated: true,
+			isAuthenticated: (localStorage.getItem('refreshToken') && new Date().getTime() >=  JSON.parse(window.atob(localStorage.getItem('refreshToken').split('.')[1])).exp * 1000),
 			isLoaded: true,
 		};
 		this.handleAuthentication = this.handleAuthentication.bind(this);
@@ -72,6 +72,7 @@ export default class App extends Component {
 			<BrowserRouter>
 				<CacheProvider value={cacheRtl}>
 					<ThemeProvider theme={Theme}>
+						<GoogleReCaptchaProvider reCaptchaKey="" language="fa" >
 						{
 							this.state.isLoaded ?  (
 								<Routes>
@@ -91,9 +92,7 @@ export default class App extends Component {
 							:
 								<Alert severity='info' sx={{mx:'auto', textAlign:'center', my:5}}> لطفا صبر کنید... </Alert>
 						}
-						
-						
-
+						</GoogleReCaptchaProvider>
 					</ThemeProvider>
 					
 				</CacheProvider>
