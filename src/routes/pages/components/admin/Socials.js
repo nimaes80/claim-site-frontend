@@ -2,11 +2,13 @@ import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { Box, Button, FormControl, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import React, { Component } from 'react';
+import requests from '../../../../utils/requests';
+import urls from '../../../../utils/urls';
 
 
 export default class Socials extends Component {
 
-
+	
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -20,6 +22,21 @@ export default class Socials extends Component {
 		this.handleTitle = this.handleTitle.bind(this);
 		this.handleURL = this.handleURL.bind(this);
 		this.handleFile = this.handleFile.bind(this);
+		this.addSocials = this.addSocials.bind(this);
+		this.removeSocials = this.removeSocials.bind(this);
+		
+
+	};
+
+
+	componentDidMount() {
+		requests.get(urls.globalInfo)
+			.then(response => {
+				if (response.status === 200 && typeof(response.data) === 'object') {
+					this.setState({socials:response.data.socials})
+				};
+			})
+			.catch(error => {});
 	};
 
 
@@ -32,15 +49,56 @@ export default class Socials extends Component {
 	handleFile(e) {
 		const f =  e.target.files[0];
 		if (f.type.includes('svg') && f.name.includes('svg')) {
-			this.setState({ file: f});
-			this.setState({fileSelected: true})
-		} else {
-
-		};
-
+			const reader = new FileReader();
+			reader.readAsText(f, "UTF-8");;
+			reader.onload = (evt) => {
+				this.setState({ file: evt.target.result});
+				this.setState({fileSelected: true})
+			}
+		}
 	};
 
 
+	addSocials() {
+		let socials = this.state.socials;
+		socials.push({
+			title: this.state.title,
+			url: this.state.url,
+			icon: this.state.file,
+		})
+		requests.patch(urls.updateGlobalInfo, {
+			socials:socials,
+
+		}, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+			.then(response => {
+				this.setState({socials:socials});
+			})
+			.catch(error => {
+			})
+	};
+
+
+	removeSocials(e) {
+		e.preventDefault();
+		const sIndex = e.target.parentElement.parentElement.getAttribute('data-index');
+		let socials = this.state.socials;
+		socials.pop(sIndex);
+		if (sIndex) {
+			requests.patch(urls.updateGlobalInfo,
+				{
+					socials:socials
+				},
+				{headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+				.then( response => {
+					this.setState({socials: socials});
+				})
+				.catch(error => {
+					if (error.status === 404) {
+						this.setState({socials: socials});
+					}
+				})
+			}
+	}
 	
 	render() {
 		return (
@@ -53,33 +111,31 @@ export default class Socials extends Component {
 								<input onChange={this.handleFile}
 									type="file"
 									hidden
-									accept='.svg'
+									accept='image/svg+xml'
 								/>
 							</Button>
 							{
 								this.state.fileSelected ? <Typography variant='caption'> فایل انتخاب شد. </Typography> : null
 							}
-							<Button className="center" variant="contained" component="label" sx={{my:"5px !important", width:{sx:'100%', md:'25%'}}}> ذخیره </Button>
+							<Button onClick={this.addSocials} className="center" variant="contained" component="label" sx={{my:"5px !important", width:{sx:'100%', md:'25%'}}}> ذخیره </Button>
 						</FormControl>
 						<Table sx={{width:"100%"}}>
 							<TableHead>
 								<TableRow>
-									<TableCell sx={{width:'5%'}} className='center'> کد </TableCell>	
-									<TableCell sx={{width:'35%'}} className='center'> نام </TableCell>	
-									<TableCell sx={{width:'55%'}} className='center'> آدرس </TableCell>	
-									<TableCell sx={{width:'5%'}} className='center'>  </TableCell>	
+									<TableCell sx={{width:'30%'}} className='center'> نام </TableCell>	
+									<TableCell sx={{width:'60%'}} className='center'> آدرس </TableCell>	
+									<TableCell sx={{width:'10%'}} className='center'>  </TableCell>	
 								</TableRow>
 							</TableHead>
 
 							<TableBody>
 								{
-									this.state.socials.map(social => (
-										<TableRow> 
-											<TableCell sx={{width:'5%'}} className='center'> { social.id } </TableCell>	
-											<TableCell sx={{width:'35%'}} className='center'>{ social.title }  </TableCell>
-											<TableCell sx={{width:'55%'}} className='center'>{ social.url }  </TableCell>
-											<TableCell sx={{width:'5%'}} className='center'>
-												<IconButton color="error"> <DeleteRoundedIcon /> </IconButton>
+									this.state.socials.map((social, i) => (
+										<TableRow key={i}>
+											<TableCell sx={{width:'30%'}} className='center'>{ social.title }  </TableCell>
+											<TableCell sx={{width:'60%'}} className='center'>{ social.url }  </TableCell>
+											<TableCell sx={{width:'10%'}} className='center'>
+												<IconButton data-index={i} color="error" onClick={this.removeSocials}> <DeleteRoundedIcon /> </IconButton>
 											</TableCell>
 										</TableRow>
 									))

@@ -10,6 +10,7 @@ export default class TopBar extends Component {
 		super(props);
 		this.state = {
 			user:{},
+			globals: [],
 
 		};
 		this.getUser = this.getUser.bind(this);
@@ -19,7 +20,7 @@ export default class TopBar extends Component {
 
 	componentDidMount() {
 		this.getUser();
-		
+		this.getExteras();
 	}
 
 	
@@ -45,61 +46,65 @@ export default class TopBar extends Component {
 			headers: { 'Authorization': `Bearer ${localStorage.getItem('access')}` }
 		})
 		.then(response => {
-			if (response.status === 200 && typeof(response.data) === 'object' ) {
-				this.setState({user:response.data})
-			}
-		})
-		.catch(error => {
-
-		})
+				if (response.status === 200 && typeof(response.data) === 'object' ) {
+					this.setState({user:response.data});
+				}
+			})
+			.catch(error => {})
 	}
+
+
+	getExteras() {
+		requests.get(urls.globalInfo, {
+			headers: { 'Authorization': `Bearer ${localStorage.getItem('access')}` }
+		})
+		.then(response => {
+				if (response.status === 200 && typeof(response.data.extra) === 'object' ) {
+					this.setState({globals:response.data.extra});
+				}
+			})
+			.catch(error => {})
+	}
+
+
 	
-  render() {
-	return (
-	  <Box className='world-map'>
-				
-				<Container sx={{pt:25}} className="center">
-					<Button onClick={this.claim} sx={{py:2, px:5, mt:5, borderRadius:4,border:2, fontSize:20, fontWeight:700, backgroundColor: '#ecdada07', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}} variant='outlined' size="large" color='white'> کلایم </Button>
-					<Box sx={{borderRadius:4, border:1, width:"fit-content", py:2, px:5, mt:5, backgroundColor: '#ecdada07', mx:"auto", color:'#fff', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}}>
-						<Typography variant="body2" > زمان تا کلایم بعدی </Typography>
-						{
-							Object.keys(this.state.user).length ?
-								<Countdown date={ this.state.user.claim_datetime } />
-							:
-							null
-
-						}
-					</Box>
-
-					<Grid container>
-						<Grid item xs={12} md={4}>
-							<Box sx={{borderRadius:4, border:1, width:"fit-content", py:2, px:5, mt:5, backgroundColor: '#ecdada07', mx:"auto", color:'#fff', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}}>
-								<Typography variant="body2" > تعداد کاربران </Typography>
-								<Typography variant="body2" > {0} </Typography>
-							</Box>
-						</Grid>
-
-						<Grid item xs={12} md={4}>
-							<Box sx={{borderRadius:4, border:1, width:"fit-content", py:2, px:5, mt:5, backgroundColor: '#ecdada07', mx:"auto", color:'#fff', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}}>
-								<Typography variant="body2" > مقدار برداشتی </Typography>
-								<Typography variant="body2" > { this.state.user.withdraw } </Typography>
-							</Box>
-						</Grid>
-
-						<Grid item xs={12} md={4}>
-							<Box sx={{borderRadius:4, border:1, width:"fit-content", py:2, px:5, mt:5, backgroundColor: '#ecdada07', mx:"auto", color:'#fff', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}}>
-								<Typography variant="body2" > ... </Typography>
-								<Typography variant="body2" > {0} </Typography>
-							</Box>
-						</Grid>
-
-					</Grid>
-
-				
+	render() {
+		const globals = this.state.globals;
+		return (
+		<Box className='world-map'>
 					
-				</Container>
-			
-			</Box>
-	)
-  }
+					<Container sx={{pt:25}} className="center">
+						<Button onClick={this.claim} sx={{py:2, px:5, mt:5, borderRadius:4,border:2, fontSize:20, fontWeight:700, backgroundColor: '#ecdada07', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}} variant='outlined' size="large" color='white'> کلایم </Button>
+						<Box sx={{borderRadius:4, border:1, width:"fit-content", py:2, px:5, mt:5, backgroundColor: '#ecdada07', mx:"auto", color:'#fff', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}}>
+							<Typography variant="body2" > زمان تا کلایم بعدی </Typography>
+							{
+								Object.keys(this.state.user).length ?
+									<Countdown date={ this.state.user.claim_datetime } />
+								:
+								null
+
+							}
+						</Box>
+
+						<Grid container alignItems="center" justifyContent="center">
+								{
+									Object.keys(globals).map((global, i) => (
+										<Grid item xs={12} md={4} key={i}>
+											<Box sx={{borderRadius:4, border:1, width:"fit-content", py:2, px:5, mt:5, backgroundColor: '#ecdada07', mx:"auto", color:'#fff', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}}>
+												<Typography variant="body2" > {globals[global].title} </Typography>
+												<Typography variant="body2" > {globals[global].value} </Typography>
+											</Box>
+										</Grid>
+									))
+								}
+
+						</Grid>
+
+					
+						
+					</Container>
+				
+				</Box>
+		)
+	}
 }

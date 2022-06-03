@@ -21,15 +21,15 @@ export default function PersistentDrawerLeft() {
 	};
 
 	const submit = () => {
-		requests.post(urls.systemSetting, {
+		requests.patch(urls.systemSettingUpdater, {
 			claim_point: claimPoint,
 			subset_point: subsetPoint,
 			claim_period: claimPeriod,
 
 		}, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
 			.then(response => {
-				if (response.status === 201 && typeof(response.data) === 'object') {
-
+				if (response.status === 200 && typeof(response.data) === 'object') {
+						alert('انجام شد.');
 				};
 			})
 			.catch(error => {

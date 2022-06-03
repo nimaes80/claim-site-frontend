@@ -6,7 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SourceIcon from '@mui/icons-material/Source';
-import { Box, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, Toolbar, Typography } from '@mui/material';
+import { Box, Button, CssBaseline, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, Toolbar, Typography } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import { useEffect, useState } from 'react';
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
@@ -128,6 +128,9 @@ export default function PersistentDrawerLeft() {
 								<Typography variant="h6" noWrap component="div">
 									LOGO
 								</Typography>
+								<Button component={NavLink} to='/' color="white">
+									خانه
+								</Button>
 							</Toolbar>
 						</AppBar>
 						<Drawer

@@ -82,5 +82,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 - [X] Add second page
 - [X] Add about/contact
 - [ ] Add socials
+- [X] Add Public Info
 - [X] Add referal
 - [ ] Unknown things
+- [ ] Edit config

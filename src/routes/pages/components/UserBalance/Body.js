@@ -10,13 +10,15 @@ export default class Body extends Component {
 		super(props);
 		this.state = {
 			user: {},
-
+			amount: 0
 		};
 
 
 		this.getUser = this.getUser.bind(this);
 		this.copyRef = this.copyRef.bind(this);
-		this.handleWithraw = this.handleWithraw.bind(this);
+		this.handleWithdraw = this.handleWithdraw.bind(this);
+		this.withdraw = this.withdraw.bind(this);
+		
 	}
 
 
@@ -44,11 +46,18 @@ export default class Body extends Component {
 	}
 
 	withdraw() {
-		
+		requests.post(urls.withdraw, {amount:this.state.amount}, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+			.then(response => {
+				alert('انجام شد.');
+
+			})
+			.catch(error => {
+				alert('موجودی کافی نیست');
+			})
 	};
 
-	handleWithraw(e) {
-		this.setState({widraw:e.target.value})
+	handleWithdraw(e) {
+		this.setState({amount:e.target.value})
 	};
 
 
@@ -76,7 +85,7 @@ export default class Body extends Component {
 				</Card>
 
 				<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
-					<TextField type="number" onChange={this.handleWithraw} label="میزان برداشت" /> <br />
+					<TextField type="number" onChange={this.handleWithdraw} label="میزان برداشت" /> <br />
 					<Button size="large" onClick={this.withdraw}> برداشت </Button>
 				</Card>
 				
