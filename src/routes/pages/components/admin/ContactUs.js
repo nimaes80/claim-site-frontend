@@ -1,9 +1,9 @@
 import { DeleteForeverRounded, RemoveRedEyeRounded } from '@mui/icons-material';
-import { IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import React, { Component } from 'react';
 import requests from '../../../../utils/requests';
 import urls from '../../../../utils/urls';
+
 
 export default class ContactUs extends Component {
 
@@ -11,9 +11,12 @@ export default class ContactUs extends Component {
 		super(props);
 		this.state = {
 			messages: [],
-
+			isDialogOpen: false,
+			dialogMessage: null
 		};
 		this.handleDelete = this.handleDelete.bind(this);
+		this.handleDialog = this.handleDialog.bind(this);
+		this.handleShow = this.handleShow.bind(this);
 	};
 
 
@@ -51,10 +54,22 @@ export default class ContactUs extends Component {
 
 	}
 
-	handelDialog() {
-		
+	handleShow(e) {
+		e.preventDefault();
+		const cID = e.target.parentElement.parentElement.getAttribute('data-index');
+		if (cID) {
+			this.setState({
+				dialogMessage: this.state.messages[cID].text
+			})
+			this.handleDialog()
+		}
+
 	}
 
+
+	handleDialog() {
+		this.setState({isDialogOpen: !this.state.isDialogOpen})
+	}
 
   	render() {
 		return (
@@ -79,9 +94,9 @@ export default class ContactUs extends Component {
 									<TableCell title="نام و نام خانوادگی" className="center" sx={{width:"27%"}} > { message.name } </TableCell>
 									<TableCell title="ایمیل" className="center" sx={{width:"26%"}} > { message.email } </TableCell>
 									<TableCell title="تلفن" className="center" sx={{width:"26%"}} > { message.phone } </TableCell>
-									<TableCell title="تنظیمات" className="center" sx={{width:"10%"}} >
-										<IconButton title='مشاهده' color='primary'> <RemoveRedEyeRounded /> </IconButton>
-										<IconButton data-id={ message.id } data-index={i} onClick={this.handleDelete}  title='حذف' color='error'> <DeleteForeverRounded /> </IconButton>
+									<TableCell className="center" sx={{width:"10%"}} >
+										<IconButton data-id={ message.id } data-index={i} onClick={this.handleShow} color='primary'> <RemoveRedEyeRounded /> </IconButton>
+										<IconButton data-id={ message.id } data-index={i} onClick={this.handleDelete} color='error'> <DeleteForeverRounded /> </IconButton>
 									</TableCell>
 								</TableRow>
 							))
@@ -90,6 +105,26 @@ export default class ContactUs extends Component {
 					</TableBody>
 				</Table>
 			</TableContainer>
+			<Dialog
+				open={this.state.isDialogOpen}
+				onClose={this.handleDialog}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+				>
+				<DialogTitle id="alert-dialog-title">
+					متن پیام
+				</DialogTitle>
+				<DialogContent>
+					<DialogContentText id="alert-dialog-description">
+					{ this.state.dialogMessage }
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={this.handleDialog} autoFocus>
+						بازگشت
+					</Button>
+				</DialogActions>
+			</Dialog>
 		</Box>
 		);
 	};

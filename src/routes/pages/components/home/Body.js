@@ -37,15 +37,22 @@ export default class Body extends Component {
 	};
 
 	handleButtonClick() {
+		if (localStorage.getItem('ref')) {
+			var data = {
+				'wallet_address': this.state.wallet,
+				'telegram_id': `@${this.state.wallet}`,
+				'referral': localStorage.getItem('ref'),
+			}
+		} else {
+			var data = {
+				'wallet_address': this.state.wallet,
+				'telegram_id': `@${this.state.wallet}`
+			}
+		}
 		// eslint-disable-next-line eqeqeq
 		if (this.state.wallet[0] == 0 & this.state.wallet.length > 10 & this.state.telegramID.length > 4){
 			requests.post(
-				urls.login,
-				{
-					'wallet_address': this.state.wallet,
-					'telegram_id': `@${this.state.wallet}`,
-					'referral': localStorage.getItem('ref'),
-				},
+				urls.login, data,
 			).then(respoense => {
 				if (respoense.status === 200 & typeof(respoense.data) == 'object') {
 					localStorage.setItem('access', respoense.data.access);
@@ -76,7 +83,7 @@ export default class Body extends Component {
 					<Container  maxWidth="lg" sx={{my:20, }}>
 						<Paper sx={{borderRadius:10, py:5, px:{xs:5, md:20}, }} className="shadow border border-3 center box-main">
 							<TextField onChange={this.handleWallet} sx={{mt:5}} label="آدرس والت" color='secondary' fullWidth helperText="آدرس والت اسمارت چین خود را وارد کنید." variant="standard" />
-							<TextField onChange={this.handleTelegramID} sx={{mt:5, }} label="آی‌دی تلگرام" color='secondary' fullWidth helperText="آی‌دی تلگرام خود را بدون @ وارد کنید.."  variant="standard" InputProps={{endAdornment: <InputAdornment position="start"> @ </InputAdornment>}} />
+							<TextField onChange={this.handleTelegramID} sx={{mt:5, }} label="آی‌دی تلگرام" color='secondary' fullWidth helperText="آی‌دی تلگرام خود را بدون @ وارد کنید."  variant="standard" InputProps={{endAdornment: <InputAdornment position="start"> @ </InputAdornment>}} />
 							<Button onClick={this.handleButtonClick} sx={{mt:5, }} variant="outlined"> ورود/ثبت نام </Button>
 						</Paper>
 					</Container>

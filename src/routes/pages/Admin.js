@@ -93,7 +93,7 @@ export default function PersistentDrawerLeft() {
 	};
 
 	useEffect(() => {
-		requests.get(urls.userProfile, {
+		requests.get(urls.user, {
 			headers: { 'Authorization': `Bearer ${localStorage.getItem('access')}` }
 		})
 		.then(response => {
