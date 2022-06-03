@@ -33,32 +33,6 @@ export default class App extends Component {
 	};
 	
 
-	// componentDidMount(props) {
-	// 	const refreshToken = localStorage.getItem('refreshToken');
-
-	// 	const isExpired = (token) => {
-	// 		try {
-	// 		const jwt = JSON.parse(window.atob(token.split('.')[1]));
-	// 		return Boolean(new Date().getTime() >= jwt.exp * 1000);
-	// 		} catch {
-	// 			return true;
-	// 		};
-	// 	};
-	// 	if (refreshToken !== null) {
-	// 		if (!isExpired(refreshToken)) {
-	// 			this.setState({isAuthenticated: true});
-	// 		};
-	// 		this.setState({isLoaded:true});
-	// 		this.forceUpdate();
-	// 	} else {
-	// 		this.setState({isLoaded:true});
-	// 	}
-		
-		
-
-	// };
-	
-
 	handleAuthentication({value}) {
 		this.setState({
 			isAuthenticated: value,
