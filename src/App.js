@@ -24,7 +24,7 @@ export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isAuthenticated: (localStorage.getItem('refreshToken') && new Date().getTime() >=  JSON.parse(window.atob(localStorage.getItem('refreshToken').split('.')[1])).exp * 1000),
+			isAuthenticated: true,
 			isLoaded: true,
 		};
 		this.handleAuthentication = this.handleAuthentication.bind(this);
@@ -49,19 +49,17 @@ export default class App extends Component {
 						<GoogleReCaptchaProvider reCaptchaKey="" language="fa" >
 						{
 							this.state.isLoaded ?  (
-								<Routes>
-									{
-										this.state.isAuthenticated ?
-											<>
-												<Route path='/dashboard/*' element={<Private />} />
-												<Route path='/*' element={<Public handleAuthentication={this.handleAuthentication} />} />
-											</>
-										:
-											<>
-												<Route path='/*' element={<Public handleAuthentication={this.handleAuthentication} />} />
-											</>
-									}
-								</Routes>
+									this.state.isAuthenticated ?
+										<Routes>
+														<Route path='/dashboard/*' element={<Private />} />
+														<Route path='/*' element={<Public handleAuthentication={this.handleAuthentication} />} />
+														<Route path='/*' element={<Public handleAuthentication={this.handleAuthentication} />} />
+										</Routes>
+									:
+										<Routes>
+											<Route path='/*' element={<Public handleAuthentication={this.handleAuthentication} />} />
+											<Route path='/*' element={<Public handleAuthentication={this.handleAuthentication} />} />
+										</Routes>
 							)
 							:
 								<Alert severity='info' sx={{mx:'auto', textAlign:'center', my:5}}> لطفا صبر کنید... </Alert>

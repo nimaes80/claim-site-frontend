@@ -17,18 +17,12 @@ export default class ContactUs extends Component {
 		this.handleDelete = this.handleDelete.bind(this);
 		this.handleDialog = this.handleDialog.bind(this);
 		this.handleShow = this.handleShow.bind(this);
+		this.getPages = this.getPages.bind(this);
 	};
 
 
 	componentDidMount() {
-		requests.get(urls.contact, {headers: {'Authorization': `Bearer ${localStorage.getItem('access')}`}})
-			.then(response => {
-				if (response.status=== 200 && typeof(response.data.data) === 'object') {
-					this.setState({messages: response.data.data})
-				};
-			})
-			.catch(error => {
-			});
+		this.getPages()
 	};
 
 
@@ -70,6 +64,56 @@ export default class ContactUs extends Component {
 	handleDialog() {
 		this.setState({isDialogOpen: !this.state.isDialogOpen})
 	}
+
+
+
+
+
+	getPages() {
+		let listMessages = this.state.messages;
+		requests.get(`${urls.contact}?page_size=100&page=1`, {headers: {'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+			.then(response => {
+				if (response.status ===200 && typeof(response.data) === 'object' ) {
+					for (let i = 1; i <= response.data.num_of_pages; i++)  {
+						this.getContacts({page_number:i})
+							.then(data => {
+								data.forEach(element => {
+									listMessages.push(element);
+									this.setState({messages:listMessages});
+								});
+								}
+							)
+							.catch(error => {
+
+							});
+					};
+					
+
+				};
+			})
+			.catch(error => {
+				console.log(error)
+			});
+		this.setState({isLoaded: true, });
+		this.forceUpdate();
+
+	};
+
+	getContacts({page_number=1}) {
+
+		return requests.get(`${urls.contact}?page_size=100&page=${page_number}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+			.then(response => {
+				if (response.status ===200 && typeof(response.data.data) === 'object' ) {
+					return response.data.data
+				};
+			})
+			.catch(error => {
+			})
+		
+	};
+
+
+
 
   	render() {
 		return (

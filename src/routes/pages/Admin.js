@@ -3,6 +3,7 @@ import ConnectWithoutContactRoundedIcon from '@mui/icons-material/ConnectWithout
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import GroupIcon from '@mui/icons-material/Group';
 import MenuIcon from '@mui/icons-material/Menu';
+import PointOfSaleRoundedIcon from '@mui/icons-material/PointOfSaleRounded';
 import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
 import SettingsIcon from '@mui/icons-material/Settings';
 import SourceIcon from '@mui/icons-material/Source';
@@ -19,7 +20,7 @@ import GlobalSetting from './components/admin/GlobalSetting';
 import Settings from './components/admin/Settings';
 import Socials from './components/admin/Socials';
 import UserList from './components/admin/UserList';
-
+import Withdraws from './components/admin/Withdraws';
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -80,6 +81,7 @@ export default function PersistentDrawerLeft() {
 		{text: 'شبکه‌های اجتماعی', url:'socials', icon:<ConnectWithoutContactRoundedIcon />}	,
 		{text: 'متغیرات عمومی', url:'globals', icon:<PublicRoundedIcon />},
 		{text: 'پیغام‌ها', url:'contact', icon:<EmailRoundedIcon />},
+		{text: 'درخواست‌های پرداخت', url:'withdraws', icon:<PointOfSaleRoundedIcon />},
 	];
 	const [redirect, setRedirect] = useState(false);
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -178,7 +180,7 @@ export default function PersistentDrawerLeft() {
 									<Route path="/socials/" element={<Socials />} />
 									<Route path="/globals/" element={<GlobalSetting />} />
 									<Route path="/contact/" element={<ContactUs />} />
-									<Route path="/contact/:id" element={<ContactUs />} />
+									<Route path="/withdraws/" element={<Withdraws />} />
 									
 									
 									<Route path='/*' element={<Error404NotFound />} />

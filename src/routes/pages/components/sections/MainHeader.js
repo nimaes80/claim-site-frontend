@@ -379,7 +379,7 @@ export default class MainHeader extends Component {
 								{
 									this.state.socials.map((social, i) => (
 										<ListItemButton key={i} component='a' target="_blank" href={social.url}  onClick={this.handleDrawer}>
-											<ListItemIcon sx={{color:social.color ? social.color : "#000"}}>{ htmlToReactParser.parse(social.icon) }</ListItemIcon>
+											<ListItemIcon sx={{color:social.color ? social.color : "#000",}}>{ htmlToReactParser.parse(social.icon) }</ListItemIcon>
 											<ListItemText>{social.title}</ListItemText>
 										</ListItemButton>
 									))

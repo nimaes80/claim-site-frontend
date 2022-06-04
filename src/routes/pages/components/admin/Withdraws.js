@@ -9,7 +9,7 @@ import urls from '../../../../utils/urls';
 
 moment.locale('fa');
 
-export default class UserList extends Component {
+export default class Withdraws extends Component {
 
 	constructor(props) {
 		super(props);
@@ -22,30 +22,64 @@ export default class UserList extends Component {
 		};
 		this.handleSearchText = this.handleSearchText.bind(this);
 		this.doSearch = this.doSearch.bind(this);
+		this.getUsers = this.getUsers.bind(this);
+		this.getPages = this.getPages.bind(this);
 	};
 
 
 	componentDidMount() {
-		requests.get(urls.user, {
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${localStorage.getItem('access')}`
-			}
-		})
+		this.getPages();
+	};
+
+
+
+	getPages() {
+		let listUsers = this.state.users;
+		requests.get(`${urls.user}?page_size=100&page=1`, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}} )
 			.then(response => {
-				if (response.status === 200 && typeof(response.data) === 'object' ) {
-					this.setState({
-						users: response.data.data,
-						searchedUsers: response.data.data,
-					});
-				}
+				if (response.status ===200 && typeof(response.data) === 'object' ) {
+					for (let i = 1; i <= response.data.num_of_pages; i++)  {
+						this.getUsers({page_number:i})
+							// eslint-disable-next-line no-loop-func
+							.then(data => {
+								data.forEach(element => {
+									listUsers.push(element);
+								});
+								}
+							)
+							.catch(error => {
+
+							})
+							// eslint-disable-next-line no-loop-func
+							.finally( () => {
+								listUsers = this.filterWithdraw(listUsers);
+								this.setState({users:listUsers, searchedUsers:listUsers});
+							});
+					};
+					
+				};
 			})
 			.catch(error => {
-				this.setState({
-					error: error.data
-				});
+				console.log(error)
 			});
+		this.setState({isLoaded: true, });
+		this.forceUpdate();
+
 	};
+
+	getUsers({page_number=1}) {
+
+		return requests.get(`${urls.user}?page_size=100&page=${page_number}`, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+			.then(response => {
+				if (response.status ===200 && typeof(response.data.data) === 'object' ) {
+					return response.data.data
+				};
+			})
+			.catch(error => {
+			})
+		
+	};
+
 
 
 	handleSearchText(e) {
@@ -59,7 +93,7 @@ export default class UserList extends Component {
 			let isFiltered = false;
 			for(let key in user){
 				try {
-					if(user[key].includes(searchText)){
+					if(user[key].includes(searchText) && user.last_withdraw > 0){
 					isFiltered = true;
 				};
 				}
@@ -75,6 +109,21 @@ export default class UserList extends Component {
 	};
 
 
+
+	filterWithdraw(data){
+		let searchedUsers = data.filter(user => {
+			if (user.last_withdraw > 0) {
+				return true
+			}
+			return false
+		});
+		return searchedUsers
+		
+
+	}
+
+
+
 	render() {
 		return (
 			<Box>
@@ -88,11 +137,9 @@ export default class UserList extends Component {
 							<TableHead>
 								<TableRow>
 									<TableCell className='center'> آی‌دی تلگرام </TableCell>	
-									<TableCell className='center'> آخرین کلایم </TableCell>	
-									<TableCell className='center'> جایزه </TableCell>	
-									<TableCell className='center'> رفرال </TableCell>	
-									<TableCell className='center'> جایزه‌ی رفرال </TableCell>	
-									<TableCell className='center'> دریافتی </TableCell>	
+									<TableCell className='center'> کل موجودی </TableCell>	
+									<TableCell className='center'> مبلغ برداشتی </TableCell>	
+									<TableCell className='center'>  </TableCell>	
 								</TableRow>
 							</TableHead>
 
@@ -101,11 +148,12 @@ export default class UserList extends Component {
 									this.state.searchedUsers.map((user, i) => (
 										<TableRow key={i}> 
 											<TableCell className='center'> { user.telegram_id } </TableCell>
-											<TableCell className='center'> { moment.from(user.claim_datetime , 'en').local('fa').format('YYYY/MM/DD HH:mm:ss') } </TableCell>
-											<TableCell className='center'> { user.claim_point } </TableCell>
-											<TableCell className='center'> { user.referral } </TableCell>
-											<TableCell className='center'> { user.subset_point } </TableCell>
 											<TableCell className='center'> { user.total_withdraw } </TableCell>
+											<TableCell className='center'> { user.last_withdraw } </TableCell>
+											<TableCell className='center'> 
+											<Button onClick={(e) => {navigator.clipboard.writeText(user.wallet_address)}} > کپی ولت آدرس </Button>
+											
+											</TableCell>
 										</TableRow>
 									))
 								}

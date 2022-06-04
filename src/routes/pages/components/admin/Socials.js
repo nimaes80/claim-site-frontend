@@ -24,6 +24,7 @@ export default class Socials extends Component {
 		this.handleFile = this.handleFile.bind(this);
 		this.addSocials = this.addSocials.bind(this);
 		this.removeSocials = this.removeSocials.bind(this);
+		this.getPages = this.getPages.bind(this);
 		
 
 	};
@@ -100,6 +101,56 @@ export default class Socials extends Component {
 			}
 	}
 	
+
+
+	getPages() {
+		let listQuestions = this.state.questions;
+		requests.get(`${urls.faq}?page_size=100&page=1`, )
+			.then(response => {
+				if (response.status ===200 && typeof(response.data) === 'object' ) {
+					for (let i = 1; i <= response.data.num_of_pages; i++)  {
+						this.getQuestions({page_number:i})
+							.then(data => {
+								data.forEach(element => {
+									listQuestions.push(element);
+									this.setState({questions:listQuestions});
+								});
+								}
+							)
+							.catch(error => {
+
+							});
+					};
+					
+
+				};
+			})
+			.catch(error => {
+				console.log(error)
+			});
+		this.setState({isLoaded: true, });
+		this.forceUpdate();
+
+	};
+
+	getQuestions({page_number=1}) {
+
+		return requests.get(`${urls.faq}?page_size=100&page=${page_number}`, )
+			.then(response => {
+				if (response.status ===200 && typeof(response.data.data) === 'object' ) {
+					return response.data.data
+				};
+			})
+			.catch(error => {
+			})
+		
+	};
+
+
+
+
+
+
 	render() {
 		return (
 			<Box className="center">
