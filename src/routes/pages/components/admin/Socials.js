@@ -79,26 +79,23 @@ export default class Socials extends Component {
 	};
 
 
-	removeSocials(e) {
-		e.preventDefault();
-		const sIndex = e.target.parentElement.parentElement.getAttribute('data-index');
+	removeSocials(sIndex) {
 		let socials = this.state.socials;
-		socials.pop(sIndex);
-		if (sIndex) {
-			requests.patch(urls.updateGlobalInfo,
-				{
-					socials:socials
-				},
-				{headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
-				.then( response => {
+		requests.patch(urls.updateGlobalInfo,
+			{
+				socials:socials
+			},
+			{headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+			.then( response => {
+				this.setState({socials: socials});
+				socials.pop(sIndex);
+			})
+			.catch(error => {
+				if (error.status === 404) {
 					this.setState({socials: socials});
-				})
-				.catch(error => {
-					if (error.status === 404) {
-						this.setState({socials: socials});
-					}
-				})
-			}
+					socials.pop(sIndex);
+				}
+			})
 	}
 	
 
@@ -186,7 +183,7 @@ export default class Socials extends Component {
 											<TableCell sx={{width:'30%'}} className='center'>{ social.title }  </TableCell>
 											<TableCell sx={{width:'60%'}} className='center'>{ social.url }  </TableCell>
 											<TableCell sx={{width:'10%'}} className='center'>
-												<IconButton data-index={i} color="error" onClick={this.removeSocials}> <DeleteRoundedIcon /> </IconButton>
+												<IconButton color="error" onClick={() => (this.removeSocials(i))}> <DeleteRoundedIcon /> </IconButton>
 											</TableCell>
 										</TableRow>
 									))

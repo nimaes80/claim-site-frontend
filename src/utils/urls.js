@@ -10,6 +10,7 @@ const urls = {
     userClaim: 'account/user/claim/',
     userProfile: 'account/user/my_profile/',
     withdraw: 'account/user/withdraw/',
+    pay: 'account/user/pay/',
     
     faq: 'account/faq/',
     
@@ -25,6 +26,7 @@ const urls = {
 
 
     socials: 'account/socials/',
+
 };
 
 export default urls;

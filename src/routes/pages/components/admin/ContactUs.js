@@ -26,38 +26,28 @@ export default class ContactUs extends Component {
 	};
 
 
-	handleDelete(e) {
-		e.preventDefault();
-		const cID = e.target.parentElement.parentElement.getAttribute('data-id');
-		const cIndex = e.target.parentElement.parentElement.getAttribute('data-index');
-		if (cID) {
-			requests.delete(`${urls.contact}${cID}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('access')}`}})
-				.then(response => {
+	handleDelete(cID, cIndex) {
+		requests.delete(`${urls.contact}${cID}`, {headers: {'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+			.then(response => {
+				const m = this.state.messages;
+				m.pop(cIndex);
+				this.setState({messages: m});
+			})
+			.catch(error => {
+				if (error.status === 404) {
 					const m = this.state.messages;
 					m.pop(cIndex);
 					this.setState({messages: m});
-				})
-				.catch(error => {
-					if (error.status === 404) {
-						const m = this.state.messages;
-						m.pop(cIndex);
-						this.setState({messages: m});
-					};
-				});
-		};
+				};
+			});
 
 	}
 
-	handleShow(e) {
-		e.preventDefault();
-		const cID = e.target.parentElement.parentElement.getAttribute('data-index');
-		if (cID) {
-			this.setState({
-				dialogMessage: this.state.messages[cID].text
-			})
-			this.handleDialog()
-		}
-
+	handleShow(cID) {
+		this.setState({
+			dialogMessage: this.state.messages[cID].text
+		})
+		this.handleDialog()
 	}
 
 
@@ -139,8 +129,8 @@ export default class ContactUs extends Component {
 									<TableCell title="ایمیل" className="center" sx={{width:"26%"}} > { message.email } </TableCell>
 									<TableCell title="تلفن" className="center" sx={{width:"26%"}} > { message.phone } </TableCell>
 									<TableCell className="center" sx={{width:"10%"}} >
-										<IconButton data-id={ message.id } data-index={i} onClick={this.handleShow} color='primary'> <RemoveRedEyeRounded /> </IconButton>
-										<IconButton data-id={ message.id } data-index={i} onClick={this.handleDelete} color='error'> <DeleteForeverRounded /> </IconButton>
+										<IconButton onClick={() => {this.handleShow(message.id, i)}} color='primary'> <RemoveRedEyeRounded /> </IconButton>
+										<IconButton onClick={() => {this.handleDelete(message.id, i)}} color='error'> <DeleteForeverRounded /> </IconButton>
 									</TableCell>
 								</TableRow>
 							))

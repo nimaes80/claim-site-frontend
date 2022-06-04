@@ -61,26 +61,22 @@ export default class GlobalSetting extends Component {
 	}
 
 
-	removeGlobal(e){
-		e.preventDefault();
-		const gIndex = e.target.parentElement.parentElement.getAttribute('data-index');
-		if (gIndex) {
-			let globals = this.state.globals;
-			delete globals[gIndex]
-			requests.patch(urls.updateGlobalInfo,
-				{
-					extra:globals
-				},
-				{headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
-				.then( response => {
+	removeGlobal(gIndex){
+		let globals = this.state.globals;
+		delete globals[gIndex]
+		requests.patch(urls.updateGlobalInfo,
+			{
+				extra:globals
+			},
+			{headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+			.then( response => {
+				this.setState({globals: globals});
+			})
+			.catch(error => {
+				if (error.status === 404) {
 					this.setState({globals: globals});
-				})
-				.catch(error => {
-					if (error.status === 404) {
-						this.setState({globals: globals});
-					}
-				})
-			}
+				}
+			})
 	}
 
 
@@ -112,7 +108,7 @@ export default class GlobalSetting extends Component {
 											<TableCell sx={{width:"25%"}} className='center'>{ globals[global].title }  </TableCell>
 											<TableCell sx={{width:"65%"}} className='center'>{ globals[global].value }  </TableCell>
 											<TableCell sx={{width:"5%"}} className='center'>
-												<IconButton data-index={global} onClick={this.removeGlobal} color="error"> <DeleteRoundedIcon /> </IconButton>
+												<IconButton onClick={() => {this.removeGlobal(global)}} color="error"> <DeleteRoundedIcon /> </IconButton>
 											</TableCell>
 										</TableRow>
 									))

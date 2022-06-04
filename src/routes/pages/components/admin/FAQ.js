@@ -78,20 +78,15 @@ export default class FAQ extends Component {
 			})
 	};
 
-	handleUpdateQuestion(e) {
-		e.preventDefault();
-		const qId = e.target.parentElement.parentElement.getAttribute('data-id');
-		const qIndex = e.target.parentElement.parentElement.getAttribute('data-index');
-		if (qId && qIndex) {
-			let q = this.state.questions[qIndex]
-			this.setState({
-				question:q.question,
-				answer:q.answer,
-				idx: qId,
-				update: true,
-			});
+	handleUpdateQuestion(qId, qIndex) {
+		let q = this.state.questions[qIndex]
+		this.setState({
+			question:q.question,
+			answer:q.answer,
+			idx: qId,
+			update: true,
+		});
 
-		};
 	};
 
 
@@ -124,25 +119,20 @@ export default class FAQ extends Component {
 
 
 
-	removeQuestion(e) {
-		e.preventDefault();
-		const qId = e.target.parentElement.parentElement.getAttribute('data-id');
-		const qIndex = e.target.parentElement.parentElement.getAttribute('data-index');
-		if (qId && qIndex) {
-			requests.delete(`${urls.faq}${qId}/`, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
-				.then( response => {
+	removeQuestion(qId, qIndex) {
+		requests.delete(`${urls.faq}${qId}/`, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+			.then( response => {
+				let q = this.state.questions;
+				q.pop(qIndex);
+				this.setState({questions: q});
+			})
+			.catch(error => {
+				if (error.status === 404) {
 					let q = this.state.questions;
 					q.pop(qIndex);
 					this.setState({questions: q});
-				})
-				.catch(error => {
-					if (error.status === 404) {
-						let q = this.state.questions;
-						q.pop(qIndex);
-						this.setState({questions: q});
-					}
-				})
-			}
+				}
+			})
 	};
 
 
@@ -227,8 +217,8 @@ export default class FAQ extends Component {
 													<TableCell sx={{width:'5%'}} className='center'> { question.id } </TableCell>	
 													<TableCell sx={{width:'80%'}} className='center'> { question.question } </TableCell>
 													<TableCell sx={{width:'15%'}} className='center'>
-														<Tooltip title='ویرایش'><IconButton data-id={question.id} data-index={i} onClick={this.handleUpdateQuestion} color='info'><EditRoundedIcon /> </IconButton></Tooltip>
-														<Tooltip title='حذف'><IconButton data-id={question.id} data-index={i} onClick={this.removeQuestion} color='error'><DeleteRoundedIcon /> </IconButton></Tooltip>
+														<Tooltip title='ویرایش'><IconButton onClick={() => {this.handleUpdateQuestion(question.id, i)}} color='info'><EditRoundedIcon /> </IconButton></Tooltip>
+														<Tooltip title='حذف'><IconButton onClick={() => {this.removeQuestion(question.id, i)}} color='error'><DeleteRoundedIcon /> </IconButton></Tooltip>
 													</TableCell>
 													
 												</TableRow>
