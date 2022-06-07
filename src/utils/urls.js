@@ -1,6 +1,15 @@
 
+let baseURL = 'http://0.0.0.0:8001/api/';
+const DEBUG = false;
+
+if (!DEBUG) {
+    baseURL = 'https://api.stablefarm.net/api/';
+}
+
+
+
 const urls = {
-    baseURL: 'http://0.0.0.0:8001/api/',
+    baseURL: baseURL,
 
     adminLogin: 'account/login/admin/',
     login: 'account/login/',

@@ -88,11 +88,10 @@ export default class UserList extends Component {
 							<TableHead>
 								<TableRow>
 									<TableCell className='center'> آی‌دی تلگرام </TableCell>	
-									<TableCell className='center'> آخرین کلایم </TableCell>	
+									<TableCell className='center'> آخرین کلایم </TableCell>
 									<TableCell className='center'> جایزه </TableCell>	
-									<TableCell className='center'> رفرال </TableCell>	
 									<TableCell className='center'> جایزه‌ی رفرال </TableCell>	
-									<TableCell className='center'> دریافتی </TableCell>	
+									<TableCell className='center'> کل برداشت شده </TableCell>	
 								</TableRow>
 							</TableHead>
 
@@ -103,7 +102,6 @@ export default class UserList extends Component {
 											<TableCell className='center'> { user.telegram_id } </TableCell>
 											<TableCell className='center'> { moment.from(user.claim_datetime , 'en').local('fa').format('YYYY/MM/DD HH:mm:ss') } </TableCell>
 											<TableCell className='center'> { user.claim_point } </TableCell>
-											<TableCell className='center'> { user.referral } </TableCell>
 											<TableCell className='center'> { user.subset_point } </TableCell>
 											<TableCell className='center'> { user.total_withdraw } </TableCell>
 										</TableRow>

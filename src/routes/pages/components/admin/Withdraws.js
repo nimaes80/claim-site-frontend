@@ -160,7 +160,7 @@ export default class Withdraws extends Component {
 									this.state.searchedUsers.map((user, i) => (
 										<TableRow key={i}> 
 											<TableCell className='center'> { user.telegram_id } </TableCell>
-											<TableCell className='center'> { user.total_withdraw } </TableCell>
+											<TableCell className='center'> { user.claim_point + user.subset_point - user.total_withdraw } </TableCell>
 											<TableCell className='center'> { user.last_withdraw } </TableCell>
 											<TableCell className='center'> 
 											<Button onClick={(e) => {navigator.clipboard.writeText(user.wallet_address)}} > کپی ولت آدرس </Button>
