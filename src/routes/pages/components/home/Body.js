@@ -44,6 +44,7 @@ export default class Body extends Component {
 				'referral': localStorage.getItem('ref'),
 			}
 		} else {
+			// eslint-disable-next-line no-redeclare
 			var data = {
 				'wallet_address': this.state.wallet,
 				'telegram_id': `@${this.state.wallet}`

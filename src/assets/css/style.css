@@ -552,3 +552,18 @@ img {
 	object-fit: cover !important;
 	color: var(--color-neutral-000);
 }
+
+.wave4 {
+    background-color: transparent;
+    display: flex;
+    height: 64px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+	box-sizing: border-box;
+	background: url(../images/wave4.svg);
+	transform: scaleY(-1);
+	top: -10px;
+
+
+}
