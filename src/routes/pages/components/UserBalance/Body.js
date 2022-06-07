@@ -81,7 +81,7 @@ export default class Body extends Component {
 	return (
 		<Container>
 			{
-				!this.state.isLoaded ?
+				this.state.isLoaded ?
 					(
 						!this.state.redirect ?
 							<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
