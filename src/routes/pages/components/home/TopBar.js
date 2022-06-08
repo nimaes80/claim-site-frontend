@@ -17,7 +17,7 @@ export default class TopBar extends Component {
 			<img src={banner} alt="banner" className='banner' style={{width:"100%", height:"700px", zIndex:1}} />
 		</Box>
 
-		<div className="wave4" ></div>
+		<div className="wave" ></div>
 
 		</>
 	);
