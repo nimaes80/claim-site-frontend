@@ -11,5 +11,5 @@ Disallow: /security.txt
 Disallow: /sw.js
 Disallow: /favicon.ico
 Disallow: 
-Sitemap: https://api.example.ir/sitemap.xml
-Host: example.ir
+Sitemap: https://api.stablefarm.net/sitemap.xml
+Host: stablefarm.net
