@@ -71,8 +71,6 @@ export default class TopBar extends Component {
 
 
 	handleVerify(e) {
-
-		console.log(e)
 		this.setState({isRobot: false})
 	}
 
