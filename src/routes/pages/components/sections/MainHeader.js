@@ -236,7 +236,7 @@ export default class MainHeader extends Component {
 									fontWeight: 700,
 									letterSpacing: '.2rem',
 								}}
-							> LOGO لوگو </Typography>
+							> STABLE FARM </Typography>
 
 							<Box sx={{ flexGrow:1, display:{ xs:'flex', md:'none'} }}>
 								<IconButton size="large" 
@@ -257,7 +257,7 @@ export default class MainHeader extends Component {
 									fontSize: 18
 								}}
 							>
-								LOGO لوگو
+								STABLE FARM
 							</Typography>
 							
 							<Box sx={{flexGrow: 1, display: {xs:'none', md:'flex'}}}>
@@ -366,7 +366,7 @@ export default class MainHeader extends Component {
 
 						<Drawer open={this.state.isDrawerOpen} anchor="left" onClose={this.handleDrawer} sx={{display:{xs:'block', md:'none'}}} transitionDuration={300} className="opacity-90">
 							<List sx={{width:300}} className="opacity-90">
-								<ListItem className="center "> LOGO لوگو </ListItem>
+								<ListItem className="center "> STABLE FARM </ListItem>
 								<Divider sx={{my:1}} />
 								{
 									this.state.pages.map((page, i) => (

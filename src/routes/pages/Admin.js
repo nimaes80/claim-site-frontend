@@ -128,7 +128,7 @@ export default function PersistentDrawerLeft() {
 									<MenuIcon />
 								</IconButton>
 								<Typography variant="h6" noWrap component="div">
-									LOGO
+									STABLE FARM
 								</Typography>
 								<Button component={NavLink} to='/' color="white">
 									خانه

@@ -46,7 +46,7 @@ export default class App extends Component {
 			<BrowserRouter>
 				<CacheProvider value={cacheRtl}>
 					<ThemeProvider theme={Theme}>
-						<GoogleReCaptchaProvider reCaptchaKey="" language="fa" >
+						<GoogleReCaptchaProvider reCaptchaKey="6LeS21YgAAAAANLAJzyEDB1Aa4nAyRW5fQ5hbdoJ" language="fa" >
 						{
 							this.state.isLoaded ?  (
 									this.state.isAuthenticated ?
