@@ -1,6 +1,6 @@
 import { Box, Container, Paper } from '@mui/material';
 import React, { Component } from 'react';
-import banner from '../../../../assets/images/bannerak.png';
+import banner from '../../../../assets/images/bannerak.webp';
 import telegram from '../../../../assets/images/telegram.png';
 
 
