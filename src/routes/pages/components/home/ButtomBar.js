@@ -75,7 +75,7 @@ export default class ButtomBar extends Component {
 	
 	render() {
 		return (
-			<Container className="border box-main border-3" sx={{p:10, mb:5, borderRadius:7}}>
+			<Container className="box-main border-purple" sx={{p:10, mb:5, borderRadius:7}}>
 				{
 					this.state.isLoaded ?
 						<Paper>

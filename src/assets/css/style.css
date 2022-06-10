@@ -161,6 +161,7 @@
 	--color-neutral-900: #0c0c0c;
 	--bs-gradient: linear-gradient(180deg, #ffffff26, #ffffff00);
 	--large-radius: 20px;
+	--ff: #652eee;
 }
 
 html {
@@ -556,8 +557,29 @@ img {
 	box-shadow: 0 .5rem 1rem #01004c8c!important;
 }
 
+@media screen and (max-width: 600px) {
+	:root {
+		--height-wave: 120px;
+	}	
+}
+@media screen and (min-width: 601px) {
+	:root {
+		--height-wave: 200px;
+	}	
+}
 
-
+.img-wave {
+	width: 100%;
+	height: var(--height-wave);
+	position: relative;
+	display: flex;
+	transform: scaleY(-1);
+	background-color: transparent;
+	top: -40px;
+	z-index: -1;
+	pointer-events: none;
+	
+}
 
 
 .wave {
@@ -571,8 +593,13 @@ img {
 	background: url(../images/wave.svg);
 	transform: scaleY(-1);
 	top: -10px;
-	background-repeat: no-repeat;
-	background-size: 100%;
+	z-index: -1;
+	border-radius: 50px;
+}
+.wave2 {
+	transform: scale3d(-1, -1, 1);
+	position: absolute;
+	top: 1760px;
 }
 
 
