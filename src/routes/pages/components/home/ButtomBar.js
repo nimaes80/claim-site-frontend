@@ -78,8 +78,8 @@ export default class ButtomBar extends Component {
 			<Container className="box-main border-purple" sx={{p:10, mb:5, borderRadius:7}}>
 				{
 					this.state.isLoaded ?
-						<Paper>
-							<Typography variant="h2" align='center'	fontWeight={500} sx={{my:2}}> FAQ </Typography>
+						<>
+							<Typography variant="h2" align='center' fontSize={50} sx={{my:2}}> FAQ </Typography>
 							{
 								this.state.questions.map((question, i) => (
 									<Accordion key={i}>
@@ -88,7 +88,7 @@ export default class ButtomBar extends Component {
 											aria-controls="panel1bh-content"
 											id="panel1bh-header"
 										>
-											<Typography variant='h3' fontSize={20}>
+											<Typography variant='h3' fontSize={15}>
 												{ question.question }
 											</Typography>
 										</AccordionSummary>
@@ -103,7 +103,7 @@ export default class ButtomBar extends Component {
 								))
 							}
 							
-						</Paper>
+						</>
 					:
 					null
 				}
