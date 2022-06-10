@@ -1,4 +1,3 @@
-import { Dashboard } from '@mui/icons-material';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -12,6 +11,7 @@ import SvgIcon from "@mui/material/SvgIcon";
 import { Container } from '@mui/system';
 import React, { Component } from 'react';
 import { Link, Navigate, NavLink } from 'react-router-dom';
+import logo from '../../../../assets/images/logo.png';
 import requests from '../../../../utils/requests';
 import urls from '../../../../utils/urls';
 
@@ -88,11 +88,6 @@ export default class MainHeader extends Component {
 					icon: <LogoutRoundedIcon />,
 				},
 				{
-					name: 'Admin Dashboard',
-					url: '/dashboard/admin/',
-					icon: <Dashboard />,
-				},
-				{
 					name: 'Balance',
 					url: '/dashboard/balance/',
 					icon: <AccountCircleRoundedIcon />,
@@ -121,11 +116,6 @@ export default class MainHeader extends Component {
 					icon: <LogoutRoundedIcon />,
 				},
 				{
-					name: 'Admin Dashboard',
-					url: '/dashboard/admin/',
-					icon: <Dashboard />,
-				},
-				{
 					name: 'Balacne',
 					url: '/dashboard/balance/',
 					icon: <AccountCircleRoundedIcon />,
@@ -136,11 +126,6 @@ export default class MainHeader extends Component {
 				{
 					name: 'Login',
 					icon: <LoginRoundedIcon />,
-				},
-				{
-					name: 'Dashboard',
-					url: '/dashboard/admin/',
-					icon: <Dashboard />,
 				},
 				{
 					name: 'Balance',
@@ -336,8 +321,8 @@ export default class MainHeader extends Component {
 
 							<Box sx={{flexGrow:0}}>
 								<Tooltip title="Account" placement='bottom-end'>
-									<IconButton onClick={this.handleMenu} sx={{p:0}}>
-										<Avatar alt="Profile" src={null} />
+									<IconButton onClick={this.handleMenu} sx={{p:0, border:1, borderColor:"#a1a3a8", boxShadow:5}}>
+										<Avatar alt="Profile" src={logo} />
 									</IconButton>
 								</Tooltip>
 								<Menu 

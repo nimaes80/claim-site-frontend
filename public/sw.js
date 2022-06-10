@@ -2,9 +2,8 @@ var CACHE_NAME = 'pwa-cache-v1';
 	var urlsToCache = [
 		'/',
 		'/sw.js',
+		'/logo.png',
 		'/manifest.json',
-		'/offline',
-		'/favicon.ico',
 		'/sitemap.xml',
 
 		];
