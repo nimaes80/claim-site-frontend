@@ -22,9 +22,7 @@ export default class TopBar extends Component {
 	}
 
 	getExteras() {
-		requests.get(urls.globalInfo, {
-			headers: { 'Authorization': `Bearer ${localStorage.getItem('access')}` }
-		})
+		requests.get(urls.globalInfo)
 		.then(response => {
 				if (response.status === 200 && typeof(response.data.extra) === 'object' ) {
 					this.setState({globals:response.data.extra});
