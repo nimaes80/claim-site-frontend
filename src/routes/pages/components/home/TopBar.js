@@ -54,7 +54,7 @@ export default class TopBar extends Component {
 
 			<img src={svg} alt={svg} className="img-wave" />
 
-			<Container maxWidth="sm" sx={{mt:13}}>
+			<Container maxWidth="sm" sx={{mt:9}}>
 
 				<Paper sx={{px:0, py:3, mb:5, borderRadius:15}} className="border-purple">
 					<Grid container alignItems="center" justifyContent="center">
