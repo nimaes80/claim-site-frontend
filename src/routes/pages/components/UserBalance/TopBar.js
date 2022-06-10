@@ -99,10 +99,10 @@ export default class TopBar extends Component {
 							<Grid container alignItems="center" justifyContent="center">
 									{
 										Object.keys(globals).map((global, i) => (
-											<Grid item xs={12} md={4} key={i}>
+											<Grid item xs={12} key={i}>
 												<Box sx={{borderRadius:4, border:1, width:"fit-content", py:2, px:5, mt:5, backgroundColor: '#ecdada07', mx:"auto", color:'#fff', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}}>
-													<Typography variant="body2" > {globals[global].title} </Typography>
-													<Typography variant="body2" > {globals[global].value} </Typography>
+													<Typography variant="body2"> {globals[global].title} </Typography>
+													<Typography variant="body2"> {globals[global].value} </Typography>
 												</Box>
 											</Grid>
 										))
