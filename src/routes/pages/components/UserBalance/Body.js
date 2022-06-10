@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, Card, CardContent, Chip, Container, Dialog, DialogContent, DialogContentText, DialogTitle, Snackbar, TextField, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Alert, Button, Card, CardContent, Chip, Container, Dialog, DialogContent, DialogContentText, DialogTitle, Snackbar, Typography } from '@mui/material';
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import requests from '../../../../utils/requests';
@@ -54,7 +54,7 @@ export default class Body extends Component {
 
 	copyRef(){
 		this.setState({isCopy: true})
-		navigator.clipboard.writeText(`http://localhost:3000/referral/${this.state.user.uuid}/`);
+		navigator.clipboard.writeText(`${window.location.protocol + "//" + window.location.host}/referral/${this.state.user.uuid}/`);
 	}
 
 	withdraw() {
@@ -84,30 +84,30 @@ export default class Body extends Component {
 				this.state.isLoaded ?
 					(
 						!this.state.redirect ?
-							<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
+							<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}} className="border-purple">
 								<CardContent className="center" >
-									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
+									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}} className="border-purple">
 										<Typography variant="h6"> Current balance </Typography>
 										<Typography variant="body"> {this.state.user.claim_point + this.state.user.subset_point - this.state.user.total_withdraw } </Typography>
 									</Card>
 
-									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
+									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}} className="border-purple">
 										<Typography variant="h6"> Total claimed amount till today </Typography>
 										<Typography variant="body"> { this.state.user.claim_point } </Typography>
 									</Card>
 
-									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
+									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}} className="border-purple">
 										<Typography variant="h6"> Total rewards from referrals  </Typography>
 										<Typography variant="body"> { this.state.user.subset_point } </Typography>
 									</Card>
 
-									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
+									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}} className="border-purple">
 										<Typography variant="h6"> Total withdrawal from this account </Typography>
 										<Typography variant="body"> {  this.state.user.total_withdraw } </Typography>
 									</Card>
 
 
-									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
+									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}} className="border-purple">
 										<Typography variant="h6"> Referrals </Typography>
 										<Accordion>
 											<AccordionSummary>
@@ -129,8 +129,7 @@ export default class Body extends Component {
 									</Card>
 
 
-									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
-										<TextField type="number" onChange={this.handleWithdraw} label="Withdraw amount" /> <br />
+									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}} className="border-purple">
 										<Button size="large" onClick={this.handleDialog}> Withdraw </Button>
 									</Card>
 								</CardContent>
