@@ -19,7 +19,7 @@ export default class Logout extends Component {
   render() {
 	return (
 	  
-		  this.state.redirect ? <Navigate to='/' /> : <Alert severity='info' sx={{mt:5}} className='center' > لطفا صبر کنید </Alert>
+		  this.state.redirect ? <Navigate to='/' /> : <Alert severity='info' sx={{mt:5}} className='center' > Please wait... </Alert>
 	  
 	);
   };

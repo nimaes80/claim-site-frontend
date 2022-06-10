@@ -3,12 +3,6 @@
 	"name": "stablefarm.net",
 	"icons": [
 		{
-			"src": "favicon.ico",
-			"type": "image/x-icon",
-			"sizes": "any",
-			"purpose": "any"
-		},
-		{
 			"src": "logo.png",
 			"type": "image/png",
 			"sizes": "any",
@@ -23,8 +17,8 @@
 	"background_color": "#ffffff",
 	"id":".",
 	"scope": "/",
-	"lang": "fa",
-	"dir": "rtl",
+	"lang": "en",
+	"dir": "ltr",
 	"description": "",
 	"version": "1.0.0",
 	"manifest_version": "1.0",

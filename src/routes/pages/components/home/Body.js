@@ -70,7 +70,7 @@ export default class Body extends Component {
 				});
 			});
 		} else {
-			alert('لطفا تمام فیلدها را کامل و درست پر کنید.');
+			alert('Please fill all fields.');
 		};
 	};
 
@@ -81,11 +81,11 @@ export default class Body extends Component {
 			<>
 			{
 				!this.state.redirect ? (
-					<Container  maxWidth="lg" sx={{my:20, }}>
-						<Paper sx={{borderRadius:10, py:5, px:{xs:5, md:20}, }} className="shadow border border-3 center box-main">
-							<TextField onChange={this.handleWallet} sx={{mt:5}} label="آدرس والت" color='secondary' fullWidth helperText="آدرس والت اسمارت چین خود را وارد کنید." variant="standard" />
-							<TextField onChange={this.handleTelegramID} sx={{mt:5, }} label="آی‌دی تلگرام" color='secondary' fullWidth helperText="آی‌دی تلگرام خود را بدون @ وارد کنید."  variant="standard" InputProps={{endAdornment: <InputAdornment position="start"> @ </InputAdornment>}} />
-							<Button onClick={this.handleButtonClick} sx={{mt:5, }} variant="outlined"> ورود/ثبت نام </Button>
+					<Container  maxWidth="lg" sx={{my:10, }}>
+						<Paper sx={{borderRadius:10, py:5, px:{xs:5, md:20}, }} className="shadow center box-main border-purple">
+							<TextField onChange={this.handleWallet} sx={{mt:5}} label="Wallet address" color='secondary' fullWidth helperText="Please enter your Smart chain wallet address." variant="standard" />
+							<TextField onChange={this.handleTelegramID} sx={{mt:5, }} label="Telegram ID" color='secondary' fullWidth helperText="Enter your Telegram ID without @ here"  variant="standard" InputProps={{startAdornment: <InputAdornment position="start"> @ </InputAdornment>}} />
+							<Button onClick={this.handleButtonClick} sx={{mt:5, }} variant="outlined"> Login / Register </Button>
 						</Paper>
 					</Container>
 				)

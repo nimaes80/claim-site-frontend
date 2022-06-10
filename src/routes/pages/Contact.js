@@ -37,7 +37,7 @@ function Contact() {
 			text: text,
 		})
 			.then(response => {
-				alert('ارسال شد.')
+				alert('Sent.')
 			})
 			.catch(error => {
 				
@@ -48,13 +48,13 @@ function Contact() {
 
 			<Card sx={{my:10, boxShadow:5, borderRadius:2, p:10}}>
 				<CardContent className="center">
-					<Typography variant="h1" className="text-center" fontWeight={600} fontSize={60}> ارتباط با ما </Typography>
+					<Typography variant="h1" className="text-center" fontWeight={400} fontSize={60}> Contact Us</Typography>
 					<FormControl sx={{width:{xs:"100%", md:"75%"}}} className="center">
-						<TextField onChange={handleName} type='text' sx={{my:2, }} label="نام و نام خانوادگی" fullWidth />
-						<TextField onChange={handleEmail} type='email' sx={{my:2, }} label="ایمیل" fullWidth />
-						<TextField onChange={handlePhone} type='tel' sx={{my:2, }} label="شماره موبایل" fullWidth />
-						<TextField onChange={handleText} sx={{mt:2, mb:5 }} minRows={10} label="متن درخواست" fullWidth />
-						<Button onClick={sendMessage} variant='outlined' startIcon={<SendRounded />}> ارسال </Button>
+						<TextField onChange={handleName} type='text' sx={{my:2, }} label="Full Name" fullWidth />
+						<TextField onChange={handleEmail} type='email' sx={{my:2, }} label="Email" fullWidth />
+						<TextField onChange={handlePhone} type='tel' sx={{my:2, }} label="Phone Nubmber" fullWidth />
+						<TextField onChange={handleText} sx={{mt:2, mb:5 }} minRows={10} label="Content" fullWidth />
+						<Button onClick={sendMessage} variant='outlined' startIcon={<SendRounded />}> Send </Button>
 					</FormControl>
 
 				</CardContent>

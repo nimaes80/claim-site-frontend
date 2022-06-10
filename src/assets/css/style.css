@@ -73,6 +73,80 @@
 
 
 
+
+
+
+
+
+@font-face {
+	font-family: Niramit;
+	src: url('../fonts/Niramit-ExtraLight.ttf') format('truetype');
+	font-weight: 200;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: Niramit;
+	src: url('../fonts/Niramit-ExtraLightItalic.ttf') format('truetype');
+	font-weight: 200;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Niramit;
+	src: url('../fonts/Niramit-Light.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Niramit;
+	src: url('../fonts/Niramit-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Niramit;
+	src: url('../fonts/Niramit-Medium.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Niramit;
+	src: url('../fonts/Niramit-SemiBold.ttf') format('truetype');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: Niramit;
+	src: url('../fonts/Niramit-SemiBoldItalic.ttf') format('truetype');
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: Niramit;
+	src: url('../fonts/Niramit-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+
+
+
+
+
+
+
+
 :root {
 	--color-neutral-000: #fff;
 	--color-neutral-100: #f0f0f1;
@@ -96,7 +170,7 @@ html {
 * {
 	margin: 0;
 	padding: 0;
-	font-family: Vazir, 'Times New Roman', Times, serif !important;
+	font-family: Niramit, 'Times New Roman', Vazir, Times, serif !important;
 }
 
 body::-webkit-scrollbar {
@@ -336,6 +410,12 @@ body::-webkit-scrollbar-track {
 .no-border {
 	border: none !important;
 }
+.border-purple {
+	border: 1px solid #5e21f9;
+}
+
+
+
 
 /* Shadows */
 .shadow {
@@ -480,7 +560,6 @@ img {
 
 
 
-
 .wave {
 	background-color: transparent;
 	display: flex;
@@ -492,6 +571,8 @@ img {
 	background: url(../images/wave.svg);
 	transform: scaleY(-1);
 	top: -10px;
+	background-repeat: no-repeat;
+	background-size: 100%;
 }
 
 

@@ -6,7 +6,7 @@ import '../css/style.css';
 
 const Theme = createTheme({
    
-	direction:"rtl",
+	direction:"ltr",
 
 
 	palette: {

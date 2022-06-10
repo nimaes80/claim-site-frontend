@@ -33,11 +33,11 @@ export default class TopBar extends Component {
 		})
 			.then( response => {
 				this.getUser();
-				alert('دریافت شد.')
+				alert('Received.')
 			}
 			)
 			.catch(error => {
-				alert('شما قبلا کلایم کرده‌اید.')
+				alert('You have already claimed before.')
 			});
 	}
 
@@ -84,9 +84,9 @@ export default class TopBar extends Component {
 					<Box className='button-anim'>
 						<Container className="center">
 							<GoogleReCaptcha onVerify={this.handleVerify} />
-							<Button disabled={this.state.isRobot} onClick={this.claim} sx={{py:2, px:5, borderRadius:4,border:2, fontSize:20, fontWeight:700, backgroundColor: '#ecdada07', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}} variant='outlined' size="large" color='white'> کلایم </Button>
+							<Button disabled={this.state.isRobot} onClick={this.claim} sx={{py:2, px:5, borderRadius:4,border:2, fontSize:20, fontWeight:700, backgroundColor: '#ecdada07', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}} variant='outlined' size="large" color='white'> Claim </Button>
 							<Box sx={{borderRadius:4, border:1, width:"fit-content", py:2, px:5, mt:5, backgroundColor: '#ecdada07', mx:"auto", color:'#fff', transition:'all 0.4s ease','&:hover':{border:3, boxShadow:10, borderRadius:10}}}>
-								<Typography variant="body2" > زمان تا کلایم بعدی </Typography>
+								<Typography variant="body2" > Time till next claim </Typography>
 								{
 									Object.keys(this.state.user).length ?
 										<Countdown date={ this.state.user.claim_datetime } />

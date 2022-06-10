@@ -2,10 +2,10 @@ import { Dashboard } from '@mui/icons-material';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import CallRoundedIcon from '@mui/icons-material/CallRounded';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MenuIcon from '@mui/icons-material/Menu';
+import PictureAsPdfRoundedIcon from '@mui/icons-material/PictureAsPdfRounded';
 import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
 import { AppBar, Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, TextField, Toolbar, Tooltip, Typography } from '@mui/material';
 import SvgIcon from "@mui/material/SvgIcon";
@@ -14,8 +14,13 @@ import React, { Component } from 'react';
 import { Link, Navigate, NavLink } from 'react-router-dom';
 import requests from '../../../../utils/requests';
 import urls from '../../../../utils/urls';
+
+
+
 const HtmlToReactParser = require('html-to-react').Parser;
 const htmlToReactParser = new HtmlToReactParser();
+
+
 
 export default class MainHeader extends Component {
 
@@ -34,37 +39,37 @@ export default class MainHeader extends Component {
 			password: null,
 			pages: [
 				{
-					name: "خانه",
+					name: "Home",
 					url: "/",
 					icon: <HomeRoundedIcon />,
 				},
 				{
-					name: "درباره ما",
-					url: "/about/",
-					icon: <InfoRoundedIcon />,
-				},
-				{
-					name: "ارتباط با ما",
+					name: "Contact Us",
 					url: "/contact/",
 					icon: <CallRoundedIcon />,
+				},
+				{
+					name: "White Paper",
+					url: "pdf",
+					icon: <PictureAsPdfRoundedIcon />,
 				},
 				
 			],
 			socials: [
 				{
-					title: 'فیسبوک',
+					title: 'Facebook',
 					url: 'https://facebook.com',
 					icon: '',
 					color: '#4267B2',
 				},
 				{
-					title: 'تلگرام',
+					title: 'Telegram',
 					url: 'https://telegram.com',
 					icon: '',
 					color: '#229ED9',
 				},
 				{
-					title: 'روبیکا',
+					title: 'rubika',
 					url: 'https://rubika.ir/',
 					icon: '',
 					color: '#000',
@@ -74,21 +79,21 @@ export default class MainHeader extends Component {
 			f: `<svg xmlns='http://www.w3.org/2000/svg'  width='651' height='651' viewBox='0 0 800 800'>\n\t<rect fill='#1D0D33' width='800' height='800'/>\n\t<g fill='none' stroke='#2D135A'  stroke-width='1'>\n\t\t<path d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/>\n\t\t<path d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/>\n\t\t<path d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880'/>\n\t\t<path d='M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382'/>\n\t\t<path d='M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269'/>\n\t</g>\n\t<g  fill='#482755'>\n\t\t<circle  cx='769' cy='229' r='5'/>\n\t\t<circle  cx='539' cy='269' r='5'/>\n\t\t<circle  cx='603' cy='493' r='5'/>\n\t\t<circle  cx='731' cy='737' r='5'/>\n\t\t<circle  cx='520' cy='660' r='5'/>\n\t\t<circle  cx='309' cy='538' r='5'/>\n\t\t<circle  cx='295' cy='764' r='5'/>\n\t\t<circle  cx='40' cy='599' r='5'/>\n\t\t<circle  cx='102' cy='382' r='5'/>\n\t\t<circle  cx='127' cy='80' r='5'/>\n\t\t<circle  cx='370' cy='105' r='5'/>\n\t\t<circle  cx='578' cy='42' r='5'/>\n\t\t<circle  cx='237' cy='261' r='5'/>\n\t\t<circle  cx='390' cy='382' r='5'/>\n\t</g>\n</svg>`,
 			settings: [
 				{
-					name: 'ورود',
+					name: 'Login',
 					icon: <LoginRoundedIcon />,
 				},
 				{
-					name: 'خروج',
+					name: 'Logout',
 					url: '/logout/',
 					icon: <LogoutRoundedIcon />,
 				},
 				{
-					name: 'داشبورد ادمین',
+					name: 'Admin Dashboard',
 					url: '/dashboard/admin/',
 					icon: <Dashboard />,
 				},
 				{
-					name: 'بالانس',
+					name: 'Balance',
 					url: '/dashboard/balance/',
 					icon: <AccountCircleRoundedIcon />,
 				},
@@ -111,17 +116,17 @@ export default class MainHeader extends Component {
 			this.setState({isAuthenticated: true});
 			this.setState({settings: [
 				{
-					name: 'خروج',
+					name: 'Logout',
 					url: '/logout/',
 					icon: <LogoutRoundedIcon />,
 				},
 				{
-					name: 'داشبورد ادمین',
+					name: 'Admin Dashboard',
 					url: '/dashboard/admin/',
 					icon: <Dashboard />,
 				},
 				{
-					name: 'بالانس',
+					name: 'Balacne',
 					url: '/dashboard/balance/',
 					icon: <AccountCircleRoundedIcon />,
 				},
@@ -129,16 +134,16 @@ export default class MainHeader extends Component {
 		} else {
 			this.setState({settings: [
 				{
-					name: 'ورود',
+					name: 'Login',
 					icon: <LoginRoundedIcon />,
 				},
 				{
-					name: 'داشبورد ادمین',
+					name: 'Dashboard',
 					url: '/dashboard/admin/',
 					icon: <Dashboard />,
 				},
 				{
-					name: 'بالانس',
+					name: 'Balance',
 					url: '/dashboard/balance/',
 					icon: <AccountCircleRoundedIcon />,
 				},
@@ -214,7 +219,7 @@ export default class MainHeader extends Component {
 				};
 			})
 			.catch(error => {
-				alert('نام کاربری یا رمز عبور نادرست است.');
+				alert('Username or password is incorrect');
 			})
 		}
 	}
@@ -236,7 +241,7 @@ export default class MainHeader extends Component {
 									fontWeight: 700,
 									letterSpacing: '.2rem',
 								}}
-							> STABLE FARM </Typography>
+							> USDZ </Typography>
 
 							<Box sx={{ flexGrow:1, display:{ xs:'flex', md:'none'} }}>
 								<IconButton size="large" 
@@ -257,19 +262,30 @@ export default class MainHeader extends Component {
 									fontSize: 18
 								}}
 							>
-								STABLE FARM
+								USDZ
 							</Typography>
 							
 							<Box sx={{flexGrow: 1, display: {xs:'none', md:'flex'}}}>
 								{
 									this.state.pages.map((page, i) => (
-										<Button startIcon={page.icon} key={i} component={NavLink} to={page.url} className="main-nav-link"
-											sx={{
-												p:1,
-												ml:{md:2.5, lg:5},
-											}}>
-											{page.name}
-										</Button>
+											page.url === 'pdf' ?
+												<Button startIcon={page.icon} key={i} component="a" href="/Whitepaper.pdf" className="main-nav-link"
+													sx={{
+														p:1,
+														ml:{md:2.5, lg:5},
+													}}>
+													{page.name}
+												</Button>
+											:
+												<Button startIcon={page.icon} key={i} component={NavLink} to={page.url} className="main-nav-link"
+													sx={{
+														p:1,
+														ml:{md:2.5, lg:5},
+													}}>
+													{page.name}
+												</Button>
+										
+										
 									))
 								}						
 							</Box>
@@ -287,7 +303,7 @@ export default class MainHeader extends Component {
 										))
 									:
 									<>
-									<Tooltip title="شبکه‌های اجتماعی" placement="right-end">
+									<Tooltip title="Social medias" placement="right-end">
 										<IconButton onClick={this.handleSocialsMenu} >
 											<PublicRoundedIcon sx={{color:"var(--color-neutral-100);"}} />
 										</IconButton>
@@ -295,9 +311,9 @@ export default class MainHeader extends Component {
 									<Menu
 										sx={{mt:'45px', mr:7, display: {xs:'none', md:'flex'}}}
 										id="socials-menu-appbar"
-											anchorOrigin={{ vertical:'top', horizontal:'end'}}
+											anchorOrigin={{ vertical:'top', horizontal:'start'}}
 										
-										transformOrigin={{vertical: 'top', horizontal: 'end'}}
+										transformOrigin={{vertical: 'top', horizontal: 'start'}}
 										open={this.state.isSocialsMenuOpen}
 										onClose={this.handleSocialsMenu}
 									>
@@ -312,8 +328,6 @@ export default class MainHeader extends Component {
 												</MenuItem>
 											))
 										}
-
-
 										
 									</Menu>
 									</>
@@ -321,7 +335,7 @@ export default class MainHeader extends Component {
 							</Box>
 
 							<Box sx={{flexGrow:0}}>
-								<Tooltip title="اکانت" placement='bottom-end'>
+								<Tooltip title="Account" placement='bottom-end'>
 									<IconButton onClick={this.handleMenu} sx={{p:0}}>
 										<Avatar alt="Profile" src={null} />
 									</IconButton>
@@ -329,8 +343,8 @@ export default class MainHeader extends Component {
 								<Menu 
 									sx={{mt:'45px', }}
 									id="menu-appbar"
-									anchorOrigin={{ vertical:'top', horizontal:'left'}}
-									transformOrigin={{vertical: 'top', horizontal: 'left'}}
+									anchorOrigin={{ vertical:'top', horizontal:'right'}}
+									transformOrigin={{vertical: 'top', horizontal: 'right'}}
 									open={this.state.isMenuOpen}
 									onClose={this.handleMenu}
 								>
@@ -366,14 +380,20 @@ export default class MainHeader extends Component {
 
 						<Drawer open={this.state.isDrawerOpen} anchor="left" onClose={this.handleDrawer} sx={{display:{xs:'block', md:'none'}}} transitionDuration={300} className="opacity-90">
 							<List sx={{width:300}} className="opacity-90">
-								<ListItem className="center "> STABLE FARM </ListItem>
+								<ListItem className="center "> USDZ </ListItem>
 								<Divider sx={{my:1}} />
 								{
 									this.state.pages.map((page, i) => (
-										<ListItemButton key={i} component={NavLink} to={page.url} className="drawer-link" onClick={this.handleDrawer}>
+										page.url === 'pdf' ?
+										<ListItemButton key={i} component="a" href="/Whitepaper.pdf" className="drawer-link" onClick={this.handleDrawer}>
 											<ListItemIcon>{page.icon}</ListItemIcon>
 											<ListItemText>{page.name}</ListItemText>
 										</ListItemButton>
+										:
+										<ListItemButton key={i} component={NavLink} to={page.url} className="drawer-link" onClick={this.handleDrawer}>
+										<ListItemIcon>{page.icon}</ListItemIcon>
+										<ListItemText>{page.name}</ListItemText>
+									</ListItemButton>
 									))
 								}
 								<Divider sx={{my:1}} />
@@ -393,15 +413,15 @@ export default class MainHeader extends Component {
 						<Dialog open={this.state.isDialogOpen} onClose={this.handleDialog} >
 							<DialogContent >
 								<DialogTitle >
-									<Typography fontSize={30} sx={{mb:3}} textAlign="center">ورود</Typography>
+									<Typography fontSize={30} sx={{mb:3}} textAlign="center">Login</Typography>
 								</DialogTitle>
-									<TextField onChange={this.handleUsername} sx={{mb:2}} name='username' label="نام کاربری" type="text" fullWidth  />
-									<TextField onChange={this.handlePassword} sx={{mb:2}} name='password' label="گذرواژه" type="password" fullWidth  />
+									<TextField onChange={this.handleUsername} sx={{mb:2}} name='username' label="Username" type="text" fullWidth  />
+									<TextField onChange={this.handlePassword} sx={{mb:2}} name='password' label="Password" type="password" fullWidth  />
 							</DialogContent>
 
 							<DialogActions>
-								<Button size='large' onClick={this.handleDialog}> لغو </Button>
-								<Button size='large' onClick={this.handleLogin}> ورود </Button>
+								<Button size='large' onClick={this.handleDialog}> Cancel </Button>
+								<Button size='large' onClick={this.handleLogin}> Login </Button>
 							</DialogActions>	
 
 						</Dialog>

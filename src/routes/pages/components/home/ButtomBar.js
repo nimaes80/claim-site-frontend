@@ -79,7 +79,7 @@ export default class ButtomBar extends Component {
 				{
 					this.state.isLoaded ?
 						<Paper>
-							<Typography variant="h2" align='center'	fontWeight={500} sx={{my:2}}> سوالات متداول </Typography>
+							<Typography variant="h2" align='center'	fontWeight={500} sx={{my:2}}> FAQ </Typography>
 							{
 								this.state.questions.map((question, i) => (
 									<Accordion key={i}>

@@ -21,6 +21,9 @@ import Settings from './components/admin/Settings';
 import Socials from './components/admin/Socials';
 import UserList from './components/admin/UserList';
 import Withdraws from './components/admin/Withdraws';
+
+
+
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -128,7 +131,7 @@ export default function PersistentDrawerLeft() {
 									<MenuIcon />
 								</IconButton>
 								<Typography variant="h6" noWrap component="div">
-									STABLE FARM
+									USDZ
 								</Typography>
 								<Button component={NavLink} to='/' color="white">
 									خانه

@@ -60,11 +60,11 @@ export default class Body extends Component {
 	withdraw() {
 		requests.post(urls.withdraw, {amount:this.state.amount}, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
 			.then(response => {
-				alert('انجام شد.');
+				alert('Done');
 
 			})
 			.catch(error => {
-				alert('موجودی کافی نیست');
+				alert('Account balance is not enough');
 			})
 	};
 
@@ -87,40 +87,40 @@ export default class Body extends Component {
 							<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
 								<CardContent className="center" >
 									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
-										<Typography variant="h6"> موجودی فعلی </Typography>
+										<Typography variant="h6"> Current balance </Typography>
 										<Typography variant="body"> {this.state.user.claim_point + this.state.user.subset_point - this.state.user.total_withdraw } </Typography>
 									</Card>
 
 									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
-										<Typography variant="h6"> کل مقدار کلایم شده تا امروز </Typography>
+										<Typography variant="h6"> Total claimed amount till today </Typography>
 										<Typography variant="body"> { this.state.user.claim_point } </Typography>
 									</Card>
 
 									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
-										<Typography variant="h6"> جایزه‌ی رفرل تا امروز </Typography>
+										<Typography variant="h6"> Total rewards from referrals  </Typography>
 										<Typography variant="body"> { this.state.user.subset_point } </Typography>
 									</Card>
 
 									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
-										<Typography variant="h6"> کل برداشتی </Typography>
+										<Typography variant="h6"> Total withdrawal from this account </Typography>
 										<Typography variant="body"> {  this.state.user.total_withdraw } </Typography>
 									</Card>
 
 
 									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
-										<Typography variant="h6"> رفرال </Typography>
+										<Typography variant="h6"> Referrals </Typography>
 										<Accordion>
 											<AccordionSummary>
-												<Typography color="primary" className="center" > دعوت </Typography>
+												<Typography color="primary" className="center" > Invitation </Typography>
 											</AccordionSummary>
 											<AccordionDetails>
-												<Typography>این کد مخصوص شماست، این کد را به دوستان خود بفرستید تا مقداری از جایزه‌های آن‌ها را دریافت کنید. </Typography>
+												<Typography> The link below is your referral link , share your link with other people and you will earn 30% each time any of your referrals click on claim! </Typography>
 												<Chip sx={{my:1}} label={`http://localhost:3000/referral/${this.state.user.uuid}`} />
 												<br />
-												<Button onClick={this.copyRef}> کپی کد دعوت </Button>
-												<Snackbar open={this.state.isCopy} autoHideDuration={3000} message="کپی شد" className='border shadow rounded-1'>
+												<Button onClick={this.copyRef}> Copy referral link </Button>
+												<Snackbar open={this.state.isCopy} autoHideDuration={3000} message="Copied" className='border shadow rounded-1'>
 													<Alert severity="success" >
-														کپی شد
+														Copied
 													</Alert>
 												</Snackbar>
 											</AccordionDetails>
@@ -130,8 +130,8 @@ export default class Body extends Component {
 
 
 									<Card sx={{boxShadow:5, borderRadius:5, my:5, p:5}}>
-										<TextField type="number" onChange={this.handleWithdraw} label="میزان برداشت" /> <br />
-										<Button size="large" onClick={this.handleDialog}> برداشت </Button>
+										<TextField type="number" onChange={this.handleWithdraw} label="Withdraw amount" /> <br />
+										<Button size="large" onClick={this.handleDialog}> Withdraw </Button>
 									</Card>
 								</CardContent>
 
@@ -141,16 +141,16 @@ export default class Body extends Component {
 
 								<Dialog open={this.state.isDialogOpen} onClose={this.state.handleDialog}>
 									<DialogTitle>
-										برداشت از حساب
+										Withdraw from account
 									</DialogTitle>
 									<DialogContent>
 										<DialogContentText sx={{my:1}}>
-											آیا از برداشت {this.state.withdraw} از موجودی خود مطمئن هستید؟
-											<br />
-											موجودی فعلی شما {this.state.user.claim_point + this.state.user.subset_point - this.state.user.total_withdraw} می‌باشد.
+										Are you sure you want to withdraw {this.state.withdraw} from your inventor?
+										<br />
+										Your total current balance is {this.state.user.claim_point + this.state.user.subset_point - this.state.user.total_withdraw}										
 										</DialogContentText>
-										<Button size="large" onClick={this.withdraw}> بله </Button>
-										<Button size="large" onClick={this.handleDialog}> خیر </Button>
+										<Button size="large" onClick={this.withdraw}> Yes </Button>
+										<Button size="large" onClick={this.handleDialog}> No </Button>
 									</DialogContent>
 									
 								</Dialog>
