@@ -183,7 +183,7 @@ export default class Socials extends Component {
 											<TableCell sx={{width:'30%'}} className='center'>{ social.title }  </TableCell>
 											<TableCell sx={{width:'60%'}} className='center'>{ social.url }  </TableCell>
 											<TableCell sx={{width:'10%'}} className='center'>
-												<IconButton color="error" onClick={() => (this.removeSocials(i))}> <DeleteRoundedIcon /> </IconButton>
+												<IconButton color="error" onClick={() => (this.removeSocials(social))}> <DeleteRoundedIcon /> </IconButton>
 											</TableCell>
 										</TableRow>
 									))
