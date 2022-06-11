@@ -76,13 +76,13 @@ export default class TopBar extends Component {
 				<Paper sx={{borderRadius:10, p:4, boxShadow:4}} className="border-purple center" >
 					<Grid container rowSpacing={2}>
 						<Grid item xs={6}>
-							<a title="Our official Telegram channel " target='_blank' href="/" >
+							<a title="Our official Telegram channel " target='_blank' href="https://t.me/Stablefarm" >
 								<TelegramIcon /> <br />
 								Our official Telegram channel 
 							</a>
 						</Grid>
 						<Grid item xs={6}>
-							<a title="Our advertiser channel" target='_blank' href="/" >
+							<a title="Our advertiser channel" target='_blank' href="https://t.me/airdrop_crypto_pro" >
 								<RocketLaunchRoundedIcon /> <br />
 								Our advertiser channel
 							</a>

@@ -115,7 +115,7 @@ export default class Body extends Component {
 											</AccordionSummary>
 											<AccordionDetails>
 												<Typography> The link below is your referral link , share your link with other people and you will earn 30% each time any of your referrals click on claim! </Typography>
-												<Chip sx={{my:1}} label={`http://localhost:3000/referral/${this.state.user.uuid}`} />
+												<Chip sx={{my:1}} label={`${window.location.protocol + "//" + window.location.host}/referral/${this.state.user.uuid}/`} />
 												<br />
 												<Button onClick={this.copyRef}> Copy referral link </Button>
 												<Snackbar open={this.state.isCopy} autoHideDuration={3000} message="Copied" className='border shadow rounded-1'>
