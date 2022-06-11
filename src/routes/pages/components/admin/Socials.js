@@ -81,6 +81,7 @@ export default class Socials extends Component {
 
 	removeSocials(sIndex) {
 		let socials = this.state.socials;
+		socials.pop(sIndex);
 		requests.patch(urls.updateGlobalInfo,
 			{
 				socials:socials
@@ -88,12 +89,10 @@ export default class Socials extends Component {
 			{headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
 			.then( response => {
 				this.setState({socials: socials});
-				socials.pop(sIndex);
 			})
 			.catch(error => {
 				if (error.status === 404) {
 					this.setState({socials: socials});
-					socials.pop(sIndex);
 				}
 			})
 	}
