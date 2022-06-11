@@ -320,9 +320,9 @@ export default class MainHeader extends Component {
 							</Box>
 
 							<Box sx={{flexGrow:0}}>
-								<Button component="a" href="https://twitter.com/usdzio/" target="_blank">
+								<IconButton component="a" href="https://twitter.com/usdzio/" target="_blank">
 									<TwitterIcon color="white" />
-								</Button>
+								</IconButton>
 							</Box>
 
 							<Box sx={{flexGrow:0}}>
