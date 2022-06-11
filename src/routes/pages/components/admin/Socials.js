@@ -35,6 +35,7 @@ export default class Socials extends Component {
 			.then(response => {
 				if (response.status === 200 && typeof(response.data) === 'object') {
 					this.setState({socials:response.data.socials})
+					
 				};
 			})
 			.catch(error => {});
@@ -84,7 +85,7 @@ export default class Socials extends Component {
 		socials.pop(sIndex);
 		requests.patch(urls.updateGlobalInfo,
 			{
-				socials:socials
+				socials:socials,
 			},
 			{headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
 			.then( response => {
@@ -177,7 +178,7 @@ export default class Socials extends Component {
 
 							<TableBody>
 								{
-									this.state.socials.map((social, i) => (
+									this.state.socials.length > 0 ? this.state.socials.map((social, i) => (
 										<TableRow key={i}>
 											<TableCell sx={{width:'30%'}} className='center'>{ social.title }  </TableCell>
 											<TableCell sx={{width:'60%'}} className='center'>{ social.url }  </TableCell>
@@ -186,6 +187,8 @@ export default class Socials extends Component {
 											</TableCell>
 										</TableRow>
 									))
+									: 
+									null
 								} 
 								
 

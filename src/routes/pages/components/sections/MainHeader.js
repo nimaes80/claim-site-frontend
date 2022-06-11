@@ -14,7 +14,7 @@ import { Link, Navigate, NavLink } from 'react-router-dom';
 import logo from '../../../../assets/images/logo.png';
 import requests from '../../../../utils/requests';
 import urls from '../../../../utils/urls';
-
+import TwitterIcon from '@mui/icons-material/Twitter';
 
 
 const HtmlToReactParser = require('html-to-react').Parser;
@@ -317,6 +317,12 @@ export default class MainHeader extends Component {
 									</Menu>
 									</>
 								}
+							</Box>
+
+							<Box sx={{flexGrow:0}}>
+								<Button component="a" href="https://twitter.com/usdzio/" target="_blank">
+									<TwitterIcon color="white" />
+								</Button>
 							</Box>
 
 							<Box sx={{flexGrow:0}}>

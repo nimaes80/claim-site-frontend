@@ -11,7 +11,6 @@ export default class Body extends Component {
 		super(props);
 		this.state = {
 			user: {},
-			amount: 0,
 			redirect:false, 
 			isLoaded:false,
 			isDialogOpen: false,
@@ -21,7 +20,6 @@ export default class Body extends Component {
 
 		this.getUser = this.getUser.bind(this);
 		this.copyRef = this.copyRef.bind(this);
-		this.handleWithdraw = this.handleWithdraw.bind(this);
 		this.withdraw = this.withdraw.bind(this);
 		this.handleDialog = this.handleDialog.bind(this);
 		
@@ -58,18 +56,20 @@ export default class Body extends Component {
 	}
 
 	withdraw() {
-		requests.post(urls.withdraw, {amount:this.state.amount}, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
-			.then(response => {
-				alert('Done');
-
-			})
-			.catch(error => {
-				alert('Account balance is not enough');
-			})
-	};
-
-	handleWithdraw(e) {
-		this.setState({amount:e.target.value});
+		if ((this.state.user.claim_point + this.state.user.subset_point - this.state.user.total_withdraw) >= 20){
+			requests.post(urls.withdraw, {amount:this.state.amount}, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+				.then(response => {
+					alert('Done');
+					this.getUser();
+				})
+				.catch(error => {
+					alert('Account balance is not enough');
+				})
+			
+		}
+		else {
+			alert("Your balance should more than 20");
+		}
 	};
 
 
