@@ -63,7 +63,7 @@ export default function PersistentDrawerLeft() {
 				isLoaded ?
 					<FormControl fullWidth>
 						<TextField defaultValue={claimPoint} onChange={handlesetClaimPoint} sx={{mt:20}} name='claim_point' label='میزان جایزه' type='number' helperText='میزان جایزه کاربر منبع رفرال را تعیین کنید.' />
-						<TextField defaultValue={subsetPoint} onChange={handlesetSubsetPoint} sx={{my:2}} name='subset_point' label='میزان جایزه رفرال' type='number' helperText='میزان جایزه‌ای که به رفرال داده می‌شود.' />
+						<TextField defaultValue={subsetPoint} onChange={handlesetSubsetPoint} sx={{my:2}} name='subset_point' label='میزان جایزه رفرال' type='number' helperText='میزان جایزه‌ای که به رفرال داده می‌شود را وارد کنید (بر حسب در صد)' />
 						<TextField defaultValue={claimPeriod} onChange={handlesetClaimPeriod} sx={{my:2}} name='claim_period' label='دوره‌ی جایزه دهی' type='number' helperText='دوره جایزه‌دهی را بر حسب دقیقه وارد کنید.' />
 					</FormControl>
 				:
