@@ -1,5 +1,5 @@
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import { Alert, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material';
+import { Alert, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from '@mui/material';
 import * as moment from 'jalali-moment';
 import React, { Component } from 'react';
 import requests from '../../../../utils/requests';
@@ -17,7 +17,8 @@ export default class UserList extends Component {
 			searchText: null,
 			users: [],
 			searchedUsers: [],
-			error: null
+			error: null,
+			count_user: 0
 			
 		};
 		this.handleSearchText = this.handleSearchText.bind(this);
@@ -45,6 +46,14 @@ export default class UserList extends Component {
 					error: error.data
 				});
 			});
+
+		
+		requests.get(urls.count_user)
+		.then((response) => {
+			this.setState({count_user:response.data.data.count_user});
+		})
+		.catch(() => {
+		})
 	};
 
 
@@ -83,6 +92,7 @@ export default class UserList extends Component {
 					{
 						this.state.error ? <Alert severity='error' sx={{my:2, p:1}} > شما دسترسی لازم برای دیدن این بخش را ندارید. </Alert> : null
 					}
+					<Typography> User Count: {this.state.count_user} </Typography>
 					<TableContainer sx={{width:"100%"}}>
 						<Table sx={{width:"100%"}}>
 							<TableHead>

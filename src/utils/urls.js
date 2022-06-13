@@ -20,6 +20,10 @@ const urls = {
     userProfile: 'account/user/my_profile/',
     withdraw: 'account/user/withdraw/',
     pay: 'account/user/pay/',
+
+
+    ref_count: 'account/user/ref_count/',
+    user_count: 'account/user/user_count/',
     
     faq: 'account/faq/',
     

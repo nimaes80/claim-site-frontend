@@ -14,7 +14,8 @@ export default class Body extends Component {
 			redirect:false, 
 			isLoaded:false,
 			isDialogOpen: false,
-			isCopy: false
+			isCopy: false,
+			refCount: 0
 		};
 
 
@@ -47,6 +48,15 @@ export default class Body extends Component {
 		.catch(error => {
 			this.setState({redirect:true, isLoaded:true})
 		})
+
+
+
+		requests.get(urls.ref_count)
+			.then((response) => {
+				this.setState({refCount:response.data.data.count_ref});
+			})
+			.catch(() => {
+			})
 	}
 
 
@@ -125,6 +135,8 @@ export default class Body extends Component {
 												</Snackbar>
 											</AccordionDetails>
 										</Accordion>
+
+										<Typography variant="h6"> Your referrals count: {this.state.refCount} </Typography>
 
 									</Card>
 
