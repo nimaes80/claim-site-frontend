@@ -50,25 +50,36 @@ export default class Body extends Component {
 				'telegram_id': `@${this.state.wallet}`
 			}
 		}
-		// eslint-disable-next-line eqeqeq
-		if (this.state.wallet[0] == 0 & this.state.wallet.length > 10 & this.state.telegramID.length > 4){
-			requests.post(
-				urls.login, data,
-			).then(respoense => {
-				if (respoense.status === 200 & typeof(respoense.data) == 'object') {
-					localStorage.setItem('access', respoense.data.access);
-					localStorage.setItem('refresh', respoense.data.refresh);
-					this.handleAuthentication({value:true});
-					this.setState({
-						redirect:true
+		if (this.state.wallet.length > 10 & this.state.telegramID.length > 4){
+			// eslint-disable-next-line eqeqeq
+			if (this.state.wallet[0] == 0) {
+				if (!['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, '@', '/', '#', '$', '%', '^', '&', '*'].includes(this.state.telegramID[0])) {
+					requests.post(
+						urls.login, data,
+					).then(respoense => {
+						if (respoense.status === 200 & typeof(respoense.data) == 'object') {
+							localStorage.setItem('access', respoense.data.access);
+							localStorage.setItem('refresh', respoense.data.refresh);
+							this.handleAuthentication({value:true});
+							this.setState({
+								redirect:true
+							});
+							
+						};
+					}).catch(error => {
+						this.setState({
+							error:true,
+						});
 					});
-					
-				};
-			}).catch(error => {
-				this.setState({
-					error:true,
-				});
-			});
+
+
+				}else {
+					alert('Please send your telegram ID again, note you have to send it without @ ( Example: Username)')
+
+				}
+			} else {
+				alert('You entered wrong wallet address, please only Use BNB ( Smart chain)')
+			}
 		} else {
 			alert('Please fill all fields.');
 		};
