@@ -22,8 +22,8 @@ const urls = {
     pay: 'account/user/pay/',
 
 
-    ref_count: 'account/user/ref_count/',
-    user_count: 'account/user/user_count/',
+    refCount: 'account/user/ref_count/',
+    userCount: 'account/user/user_count/',
     
     faq: 'account/faq/',
     

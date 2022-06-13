@@ -23,42 +23,77 @@ export default class UserList extends Component {
 		};
 		this.handleSearchText = this.handleSearchText.bind(this);
 		this.doSearch = this.doSearch.bind(this);
+		this.getPages = this.getPages.bind(this);
+		this.getUsers = this.getUsers.bind(this);
 	};
 
 
 	componentDidMount() {
-		requests.get(urls.user, {
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${localStorage.getItem('access')}`
-			}
+		requests.get(urls.userCount, {headers:{
+			'Authorization': `Bearer ${localStorage.getItem('access')}`}
 		})
-			.then(response => {
-				if (response.status === 200 && typeof(response.data) === 'object' ) {
-					this.setState({
-						users: response.data.data,
-						searchedUsers: response.data.data,
-					});
-				}
-			})
-			.catch(error => {
-				this.setState({
-					error: error.data
-				});
-			});
-
-		
-		requests.get(urls.count_user)
 		.then((response) => {
-			this.setState({count_user:response.data.data.count_user});
+			this.setState({count_user:response.data});
 		})
-		.catch(() => {
+		.catch((error) => {
 		})
+		this.getPages();
+		
 	};
 
 
 	handleSearchText(e) {
 		this.setState({searchText:e.target.value});
+	};
+
+
+
+
+	getPages() {
+		let listUsers = this.state.users;
+		requests.get(`${urls.user}?page_size=100&page=1`, {headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+			.then(response => {
+				if (response.status ===200 && typeof(response.data) === 'object' ) {
+					for (let i = 1; i <= response.data.num_of_pages; i++)  {
+						this.getUsers({page_number:i})
+							.then(data => {
+								data.forEach(element => {
+									listUsers.push(element);
+									this.setState({
+										users: listUsers,
+										searchedUsers: listUsers,
+											});
+								});
+								}
+							)
+							.catch(error => {
+
+							});
+					};
+					
+
+				};
+			})
+			.catch(error => {
+				console.log(error)
+			});
+		this.setState({isLoaded: true, });
+		this.forceUpdate();
+
+	};
+
+	getUsers({page_number=1}) {
+
+		return requests.get(`${urls.user}?page_size=100&page=${page_number}`, {headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+			.then(response => {
+				if (response.status ===200 && typeof(response.data.data) === 'object' ) {
+					console.log(response.data.data)
+					return response.data.data
+				};
+			})
+			.catch(error => {
+			})
+		
 	};
 
 

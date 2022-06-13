@@ -53,7 +53,7 @@ export default class Body extends Component {
 
 		requests.get(urls.ref_count)
 			.then((response) => {
-				this.setState({refCount:response.data.data.count_ref});
+				this.setState({refCount:response.data});
 			})
 			.catch(() => {
 			})
