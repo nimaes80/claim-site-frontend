@@ -125,12 +125,10 @@ export default class Withdraws extends Component {
 	}
 
 
-	payPayments(user, i) {
-		requests.post(urls.pay, {user_id:user}, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
+	payPayments(user_id, i, user) {
+		requests.post(urls.pay, {user_id:user_id}, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}})
 			.then(() => {
-				user = this.state.users;
-				user.pop(i);
-				this.setState({users:user, searchedUsers:user});
+				this.getPages();
 			})
 			.catch(()=> {})
 	}
@@ -164,7 +162,7 @@ export default class Withdraws extends Component {
 											<TableCell className='center'> { user.last_withdraw } </TableCell>
 											<TableCell className='center'> 
 											<Button onClick={(e) => {navigator.clipboard.writeText(user.wallet_address)}} > کپی ولت آدرس </Button>
-											<Button onClick={() => {this.payPayments(user.id, i)}} > پرداخت شد </Button>
+											<Button onClick={() => {this.payPayments(user.id, i, user)}} > پرداخت شد </Button>
 											
 											</TableCell>
 										</TableRow>
