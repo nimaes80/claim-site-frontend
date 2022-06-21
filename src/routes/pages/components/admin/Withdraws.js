@@ -36,7 +36,7 @@ export default class Withdraws extends Component {
 
 
 	getPages() {
-		let listUsers = this.state.users;
+		let listUsers = [];
 		requests.get(`${urls.user}?page_size=100&page=1`, {headers:{'Authorization': `Bearer ${localStorage.getItem('access')}`}} )
 			.then(response => {
 				if (response.status ===200 && typeof(response.data) === 'object' ) {
